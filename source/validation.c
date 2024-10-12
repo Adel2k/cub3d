@@ -7,9 +7,15 @@ void	validating_texture(char *line)
 
 
 	texture = malloc(sizeof(texture));
+
+
 	args = ft_split(line);
 	int i = -1;
-	printf("aaaaa\n");
+		printf("--------d----%s\n", args[0]);
+		printf("--------d----%s\n", args[1]);
+
+
+	printf("<<<<<<<<<<<<<<%d",ft_strlen(args[0]));
 	while (args[1][++i])
 	{
 		printf("------------%c\n", args[1][i]);
@@ -40,9 +46,9 @@ int	parsing(char *filename)
 			line = get_next_line(fd);
 			if (!line)
 				return (0);
+	printf("%s\n", line);
 			line = trim(line);
 			validating_texture(line);
-
 			// printf("%s", line);
 		}
 	}

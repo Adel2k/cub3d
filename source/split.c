@@ -31,6 +31,7 @@ static char	**split(char **memory, char *s, char **temp)
 	int		i;
 	int		j;
 
+    printf("-----%s\n", s);
 	i = 0;
 	temp = memory;
 	while (s[i])
@@ -45,7 +46,6 @@ static char	**split(char **memory, char *s, char **temp)
 			|| s[i] == 0)
 			{
 				*temp = ft_substr(s, j, i - j);
-        printf("<<<<<%s\n", *temp);
 				temp++;
 			}
 		}
@@ -66,13 +66,14 @@ char	**ft_split(char *s)
 	i = 0;
 	if (!s)
 		return (NULL);
-    printf("-----%s\n", s);
+	printf("s ==== %s\n", s);
 	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
 	{
 		i++;
 		if (s[i] == 0)
 			return (NULL);
 	}
+
 	memory = (char **)malloc(sizeof(char *) * (word_count(s) + 1));
 	if (!memory)
 		return (NULL);

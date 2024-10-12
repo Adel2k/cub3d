@@ -73,14 +73,14 @@ char	*trim(char *line)
 		return (NULL);
 	while (is_space(line[start]))
 		start++;
-	while (is_space(line[end]))
+	while (is_space(line[end - 1]))
 		end--;
-	new = malloc(end - start + 1);
+	new = malloc(end - start);
 	if (!new)
 		return (NULL);
 	i = -1;
-	while (new[++i] && start < end)
-		new[i] = line[start++];
+	while (start < end)
+		new[i++] = line[start++];
 	new[i] = 0;
 	return (new);
 }
