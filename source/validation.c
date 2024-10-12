@@ -1,5 +1,32 @@
 # include "../include/cub3d.h"
 
+void	validating_texture(char *line)
+{
+	char		**args;
+	t_texture	*texture;
+
+
+	texture = malloc(sizeof(texture));
+	args = ft_split(line);
+	int i = -1;
+	printf("aaaaa\n");
+	while (args[1][++i])
+	{
+		printf("------------%c\n", args[1][i]);
+
+	}
+	
+	if (!line)
+		return ;
+	if (!ft_strcmp("NO", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+
+	}
+
+
+}
+
 int	parsing(char *filename)
 {
 	int		fd;
@@ -13,6 +40,10 @@ int	parsing(char *filename)
 			line = get_next_line(fd);
 			if (!line)
 				return (0);
+			line = trim(line);
+			validating_texture(line);
+
+			// printf("%s", line);
 		}
 	}
 	write(2, "Error:file doesn't exist.\n", 27);

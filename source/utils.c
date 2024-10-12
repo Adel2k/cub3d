@@ -39,6 +39,7 @@ char	*ft_substr(char *s, int start, int len)
 		i++;
 	}
 	dest[i] = '\0';
+	// printf("%s\n", dest);
 	return (dest);
 }
 
@@ -50,4 +51,68 @@ int	ft_strcmp(char *s1, char *s2)
 		s2++;
 	}
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+}
+
+int	is_space(char c)
+{
+	if (c == 32 || ( c >= 9 && c <= 13 ))
+		return (1);
+	return (0);
+}
+
+char	*trim(char *line)
+{
+	int		start;
+	int		end;
+	char	*new;
+	int		i;
+
+	start = 0;
+	end = ft_strlen(line);
+	if (!line)
+		return (NULL);
+	while (is_space(line[start]))
+		start++;
+	while (is_space(line[end]))
+		end--;
+	new = malloc(end - start + 1);
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (new[++i] && start < end)
+		new[i] = line[start++];
+	new[i] = 0;
+	return (new);
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char	*dest_p;
+	unsigned char	*src_p;
+
+	src_p = (unsigned char *)src;
+	dest_p = (unsigned char *)dest;
+	if (dest == 0 && src == 0)
+		return (NULL);
+	while (n != 0)
+	{
+		*dest_p++ = *src_p++;
+		n--;
+	}
+	return (dest);
+}
+
+char	*ft_strdup(char *s)
+{
+	char		*str;
+	int			size;
+	char		*result;
+
+	size = ft_strlen(s);
+	str = (char *)malloc(size + 1);
+	if (!str)
+		return (NULL);
+	result = (char *)ft_memcpy((void *)str, s, size);
+	result[size] = '\0';
+	return (result);
 }

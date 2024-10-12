@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror # -Imlx -Iinclude #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address # -Imlx -Iinclude 
 # LDFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 HEADERS =	include/cub3d.h \
@@ -17,6 +17,7 @@ SRCS_NAME = main.c \
 			utils.c \
 			get_next_line.c \
 			get_next_line_utils.c \
+			split.c \
 
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 OBJS_NAME = $(SRCS_NAME:.c=.o)
