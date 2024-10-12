@@ -39,7 +39,6 @@ char	*ft_substr(char *s, int start, int len)
 		i++;
 	}
 	dest[i] = '\0';
-	// printf("%s\n", dest);
 	return (dest);
 }
 
@@ -67,10 +66,10 @@ char	*trim(char *line)
 	char	*new;
 	int		i;
 
-	start = 0;
-	end = ft_strlen(line);
 	if (!line)
 		return (NULL);
+	start = 0;
+	end = ft_strlen(line);
 	while (is_space(line[start]))
 		start++;
 	while (is_space(line[end - 1]))
@@ -78,7 +77,7 @@ char	*trim(char *line)
 	new = malloc(end - start);
 	if (!new)
 		return (NULL);
-	i = -1;
+	i = 0;
 	while (start < end)
 		new[i++] = line[start++];
 	new[i] = 0;
@@ -115,4 +114,13 @@ char	*ft_strdup(char *s)
 	result = (char *)ft_memcpy((void *)str, s, size);
 	result[size] = '\0';
 	return (result);
+}
+
+void	malloc_check(char *str)
+{
+	if (!str)
+	{
+		write(2, "Error:allocation failed.\n", 26);
+		exit(EXIT_FAILURE);
+	}
 }

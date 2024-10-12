@@ -24,6 +24,7 @@ int		ft_strcmp(char *s1, char *s2);
 char	*trim(char *line);
 int		is_space(char c);
 char	*ft_strdup(char *s);
+void	malloc_check(char *str);
 
 
 ///////////////validation///////////////////

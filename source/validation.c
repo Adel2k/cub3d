@@ -1,43 +1,73 @@
 # include "../include/cub3d.h"
 
-void	validating_texture(char *line)
+int	validating_texture(char *line, t_texture *texture)
 {
 	char		**args;
-	t_texture	*texture;
-
-
-	texture = malloc(sizeof(texture));
-
 
 	args = ft_split(line);
-	int i = -1;
-		printf("--------d----%s\n", args[0]);
-		printf("--------d----%s\n", args[1]);
-
-
-	printf("<<<<<<<<<<<<<<%d",ft_strlen(args[0]));
-	while (args[1][++i])
-	{
-		printf("------------%c\n", args[1][i]);
-
-	}
-	
-	if (!line)
-		return ;
 	if (!ft_strcmp("NO", args[0]))
 	{
 		texture->north = ft_strdup(args[1]);
-
+		return (0);
 	}
+	else if (!ft_strcmp("SO", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+		return (0);
+	}
+	else if (!ft_strcmp("WE", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+		return (0);
+	}
+	else if (!ft_strcmp("EA", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+		return (0);
+	}
+	return (1);
+}
 
+int	validating_color(char *line, t_texture *texture)
+{
+	char		**args;
 
+	args = ft_split(line);
+	if (!ft_strcmp("F", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+		return (0);
+	}
+	else if (!ft_strcmp("SO", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+		return (0);
+	}
+	else if (!ft_strcmp("WE", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+		return (0);
+	}
+	else if (!ft_strcmp("EA", args[0]))
+	{
+		texture->north = ft_strdup(args[1]);
+		return (0);
+	}
+	return (1);
 }
 
 int	parsing(char *filename)
 {
 	int		fd;
 	char	*line;
+	t_texture	*texture;
 
+	texture = malloc(sizeof(texture));
+	if (!texture)
+	{
+		write(2, "Error: allocation failed.\n", 27);
+		return ;
+	}
 	fd = open(filename, O_RDONLY);
 	if (fd > 0)
 	{
@@ -46,10 +76,9 @@ int	parsing(char *filename)
 			line = get_next_line(fd);
 			if (!line)
 				return (0);
-	printf("%s\n", line);
 			line = trim(line);
-			validating_texture(line);
-			// printf("%s", line);
+			if (!validating_texture(line, texture) && !validating_color(line, texture))
+				validating_map(line, texture);
 		}
 	}
 	write(2, "Error:file doesn't exist.\n", 27);
