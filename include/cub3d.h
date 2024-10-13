@@ -16,6 +16,20 @@ typedef struct s_texture{
 	char	*east;
 }	t_texture;
 
+typedef struct s_color{
+	int	red;
+	int	green;
+	int	blue;
+}	t_color;
+
+typedef struct s_cub3d
+{
+	t_texture	*texture;
+	t_color		*F_color;
+	t_color		*C_color;
+	char		*position;
+	char		**map;
+}	t_cub3d;
 
 ///////////////utils///////////////////
 int		ft_strlen(char *str);
@@ -25,13 +39,14 @@ char	*trim(char *line);
 int		is_space(char c);
 char	*ft_strdup(char *s);
 void	malloc_check(char *str);
+void	error(char *msg);
 
 
 ///////////////validation///////////////////
 int		check_filename(char *filename);
 
 //////////////split////////////////////////
-char	**ft_split(char *s);
+char	**ft_split(char *s, char c);
 
 
 #endif

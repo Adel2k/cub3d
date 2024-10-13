@@ -58,6 +58,13 @@ int	is_space(char c)
 		return (1);
 	return (0);
 }
+void	error(char *msg)
+{
+	write(2, "Error:", 7);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	exit(EXIT_FAILURE);
+}
 
 char	*trim(char *line)
 {
