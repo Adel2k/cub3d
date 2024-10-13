@@ -72,7 +72,7 @@ char	**ft_split(char *s, char c)
 			return (NULL);
 	}
 
-	memory = (char **)malloc(sizeof(char *) * (word_count(s) + 1));
+	memory = (char **)malloc(sizeof(char *) * (word_count(s, c) + 1));
 	if (!memory)
 		return (NULL);
 	return (split(memory, s, c, &temp));

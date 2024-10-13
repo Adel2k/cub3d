@@ -25,8 +25,8 @@ typedef struct s_color{
 typedef struct s_cub3d
 {
 	t_texture	*texture;
-	t_color		*F_color;
-	t_color		*C_color;
+	int			F_color;
+	int			C_color;
 	char		*position;
 	char		**map;
 }	t_cub3d;
@@ -41,9 +41,17 @@ char	*ft_strdup(char *s);
 void	malloc_check(char *str);
 void	error(char *msg);
 
+///////////////validation///////////////////
+void	init_cub(t_cub3d *cub);
 
 ///////////////validation///////////////////
 int		check_filename(char *filename);
+
+///////////////color///////////////////
+int		r(int color);
+int		g(int color);
+int		b(int color);
+int		rgb(int red, int green, int blue);
 
 //////////////split////////////////////////
 char	**ft_split(char *s, char c);

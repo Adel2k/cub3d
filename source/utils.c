@@ -81,7 +81,7 @@ char	*trim(char *line)
 		start++;
 	while (is_space(line[end - 1]))
 		end--;
-	new = malloc(end - start);
+	new = malloc(end - start + 1);
 	if (!new)
 		return (NULL);
 	i = 0;

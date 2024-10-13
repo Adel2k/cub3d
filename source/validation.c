@@ -1,29 +1,10 @@
 # include "../include/cub3d.h"
 
-void	validating_map(char *line, t_cub3d *cub)
-{
+// void	validating_map(char *line, t_cub3d *cub)
+// {
 	
-}
+// }
 
-
-void	init_cub(t_cub3d *cub)
-{
-	cub->color = malloc(sizeof(t_color));
-	if (!cub->color)
-	{
-		write(2, "Error: allocation failed.\n", 27);
-		return ;
-	}
-	cub->texture = malloc(sizeof(t_texture));
-	if (!cub->texture)
-	{
-		write(2, "Error: allocation failed.\n", 27);
-		return ;
-	}
-	cub->color = NULL;
-	cub->texture = NULL;
-
-}
 int	validating_texture(char *line, t_texture *texture)
 {
 	char		**args;
@@ -52,28 +33,33 @@ int	validating_texture(char *line, t_texture *texture)
 	return (1);
 }
 
-int	validating_color(char *line, t_color *F_color, t_color *C_color)
+int	validating_color(char *line, t_cub3d *cub)
 {
 	char		**args;
+	t_color		F;
+	t_color		C;
+
 
 	args = ft_split(line, ',');
 	if (!ft_strcmp("F", args[0]))
 	{
-		F_color->red = atoi(args[1]);
-		F_color->green = atoi(args[2]);
-		F_color->blue = atoi(args[3]);
-		if (F_color->blue < 0 || F_color->blue > 150 || F_color->red < 0 \
-			|| F_color->red > 150	|| F_color->green < 0 || F_color->green > 150)
+		F.red = r(atoi(args[1]));
+		F.green = g(atoi(args[2]));
+		F.blue = b(atoi(args[3]));
+		if (F.blue < 0 || F.blue > 150 || F.red < 0 \
+			|| F.red > 150	|| F.green < 0 || F.green > 150)
 			error("the color should be in 0-255 range");
+		cub->F_color = rgb(F.red, F.green, F.blue);
 	}
 	if (!ft_strcmp("C", args[0]))
 	{
-		C_color->red = atoi(args[1]);
-		C_color->green = atoi(args[2]);
-		C_color->blue = atoi(args[3]);
-		if (C_color->blue < 0 || C_color->blue > 150 || C_color->red < 0 \
-			|| C_color->red > 150	|| C_color->green < 0 || C_color->green > 150)
+		C.red = r(atoi(args[1]));
+		C.green = g(atoi(args[2]));
+		C.blue = b(atoi(args[3]));
+		if (C.blue < 0 || C.blue > 150 || C.red < 0 \
+			|| C.red > 150	|| C.green < 0 || C.green > 150)
 			error("the color should be in 0-255 range");
+		cub->C_color = rgb(C.red, C.green, C.blue);
 	}
 	return (1);
 }
@@ -92,8 +78,9 @@ int	parsing(char *filename, t_cub3d *cub)
 			if (!line)
 				return (0);
 			line = trim(line);
-			if (!validating_texture(line, cub->texture) && !validating_color(line, cub->F_color, cub->C_color))
-				validating_map(line, cub);
+			if (!validating_texture(line, cub->texture) && !validating_color(line, cub))
+				// validating_map(line, cub);
+				return 0;
 		}
 	}
 	error("file doesn't exist.");
@@ -107,8 +94,7 @@ int	check_filename(char *filename)
 
 	cub = malloc(sizeof(t_cub3d));
 	if (!cub)
-	error("allocation failed");
-	cub = NULL;
+		error("allocation failed");
 	init_cub(cub);
 	len = ft_strlen(filename) - 1;
 	if (filename == NULL)
