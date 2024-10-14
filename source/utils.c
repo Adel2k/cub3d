@@ -44,6 +44,8 @@ char	*ft_substr(char *s, int start, int len)
 
 int	ft_strcmp(char *s1, char *s2)
 {
+	if (!s1 || !s2)
+		return (1);
 	while (*s1 != '\0' && *s1 == *s2)
 	{
 		s1++;
@@ -79,7 +81,7 @@ char	*trim(char *line)
 	end = ft_strlen(line);
 	while (is_space(line[start]))
 		start++;
-	while (is_space(line[end - 1]))
+	while (is_space(line[end]))
 		end--;
 	new = malloc(end - start + 1);
 	if (!new)
@@ -114,6 +116,8 @@ char	*ft_strdup(char *s)
 	int			size;
 	char		*result;
 
+	if (s == NULL)
+		return (NULL);
 	size = ft_strlen(s);
 	str = (char *)malloc(size + 1);
 	if (!str)

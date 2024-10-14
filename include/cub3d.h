@@ -29,6 +29,7 @@ typedef struct s_cub3d
 	int			C_color;
 	char		*position;
 	char		**map;
+	int			texture_flag;
 }	t_cub3d;
 
 ///////////////utils///////////////////
