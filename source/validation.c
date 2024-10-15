@@ -70,12 +70,16 @@ int	validating_color(char *line, t_cub3d *cub)
 
 void	parsing_map(char *line, t_cub3d *cub)
 {
-	while (++(*line))
+	int i;
+
+	i = 0;
+	while ((line[i]))
 	{
-		if (*line != '1' && *line != '0' && *line != '\0' && *line != '\n')
-	{printf("%c\n", *line);
+		if (line[i] != '1' && line[i] != '0' && line[i] != '\0' \
+			&& line[i] != '\n' && !is_space(line[i]))
 			error("The map should only contain 0 and 1");
-	}}
+		i++;
+	}
 	(void)cub;
 
 }
