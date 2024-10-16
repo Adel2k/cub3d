@@ -46,22 +46,40 @@ int		ft_strlen(char *str);
 char	*ft_substr(char *s, int start, int len);
 int		ft_strcmp(char *s1, char *s2);
 char	*trim(char *line);
-int		is_space(char c);
+int		ft_min(int num1, int num2);
+
+///////////////utils2///////////////////
 char	*ft_strdup(char *s);
-void	malloc_check(char *str);
-void	error(char *msg);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 
 ///////////////validation///////////////////
 void	init_cub(t_cub3d *cub);
+void	parsing(t_cub3d *cub, int fd);
+void	parsing_map(char *line, t_cub3d *cub);
+int		validating_color(t_cub3d *cub, char **args);
+int		validating_texture(t_cub3d *cub, char **args);
 
-///////////////validation///////////////////
-int		check_filename(char *filename);
-
-///////////////color///////////////////
+///////////////draw_utils///////////////////
 int		rgb(int red, int green, int blue);
 
 //////////////split////////////////////////
 char	**ft_split(char *s, char c);
+
+//////////////list_utils////////////////////////
+t_map	*lstlast(t_map *node);
+void	add_node(char *line, t_cub3d *cub);
+
+//////////////checkings////////////////////////
+int		check_walls(char *line, int j);
+int		check_filename(char *filename);
+int		is_space(char c);
+
+//////////////error&free////////////////////////
+void	malloc_check(char *str);
+void	error(char *msg);
+
+
+
 
 
 #endif

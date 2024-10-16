@@ -18,8 +18,12 @@ SRCS_NAME = main.c \
 			get_next_line.c \
 			get_next_line_utils.c \
 			split.c \
-			color.c \
+			draw_utils.c \
 			init.c \
+			list_utils.c \
+			checkings.c \
+			errors_free.c \
+			utils2.c\
 
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 OBJS_NAME = $(SRCS_NAME:.c=.o)

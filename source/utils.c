@@ -54,20 +54,6 @@ int	ft_strcmp(char *s1, char *s2)
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
-int	is_space(char c)
-{
-	if (c == 32 || ( c >= 9 && c <= 13 ))
-		return (1);
-	return (0);
-}
-void	error(char *msg)
-{
-	write(2, "Error:", 7);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	exit(EXIT_FAILURE);
-}
-
 char	*trim(char *line)
 {
 	int		start;
@@ -91,47 +77,4 @@ char	*trim(char *line)
 		new[i++] = line[start++];
 	new[i] = 0;
 	return (new);
-}
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	unsigned char	*dest_p;
-	unsigned char	*src_p;
-
-	src_p = (unsigned char *)src;
-	dest_p = (unsigned char *)dest;
-	if (dest == 0 && src == 0)
-		return (NULL);
-	while (n != 0)
-	{
-		*dest_p++ = *src_p++;
-		n--;
-	}
-	return (dest);
-}
-
-char	*ft_strdup(char *s)
-{
-	char		*str;
-	int			size;
-	char		*result;
-
-	if (s == NULL)
-		return (NULL);
-	size = ft_strlen(s);
-	str = (char *)malloc(size + 1);
-	if (!str)
-		return (NULL);
-	result = (char *)ft_memcpy((void *)str, s, size);
-	result[size] = '\0';
-	return (result);
-}
-
-void	malloc_check(char *str)
-{
-	if (!str)
-	{
-		write(2, "Error:allocation failed.\n", 26);
-		exit(EXIT_FAILURE);
-	}
 }
