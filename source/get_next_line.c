@@ -6,121 +6,82 @@
 /*   By: adel <adel@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:03:40 by aeminian          #+#    #+#             */
-/*   Updated: 2024/10/12 14:43:47 by adel             ###   ########.fr       */
+/*   Updated: 2024/10/16 18:20:22 by adel             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/get_next_line.h"
+#include "../include/cub3d.h"
 
-char	*get_new_line(char *line)
+
+static void	free_ptr(char **str)
 {
-	char	*next_line;
-	int	len;
+	free(*str);
+	*str = NULL;
+}
+
+static char	*get_line(char **buffer, char **line)
+{
+	char	*res;
 	int		i;
 
 	i = 0;
-	if (!line || !*line)
-		return (NULL);
-	len = new_line_len(line);
-	next_line = (char *)malloc(len + 1);
-	if (!next_line)
-		return (NULL);
-	while (line[i] != '\n' && i < (int)len)
-	{
-		next_line[i] = line[i];
+	res = NULL;
+	while (*(*buffer + i) != '\n' && *(*buffer + i) != '\0')
 		i++;
+	if (*(*buffer + i) == '\n')
+	{
+		i++;
+		*line = ft_substr(*buffer, 0, i);
+		res = ft_strdup(*buffer + i);
 	}
-	next_line[i] = '\n';
-	next_line[len] = 0;
-	return (next_line);
+	else
+		*line = ft_strdup(*buffer);
+	free_ptr(buffer);
+	return (res);
 }
 
-char	*fetch(char *line)
+static int	read_line(int fd, char **buff, char **buffer, char **line)
 {
-	char	*buf;
-	int		i;
-	int		j;
+	int		byte;
+	char	*temp;
 
-	i = 0;
-	buf = (char *)malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
-	while (line[i] != 0 && line[i] != '\n')
-		i++;
-	if (line[i] == 0)
+	byte = 1;
+	while (!ft_strchr(*buffer, '\n') && byte)
 	{
-		free(line);
-		free(buf);
-		return (NULL);
-	}
-	if (line[i] == '\n')
-		i++;
-	j = 0;
-	while (line[i] != 0 && j < BUFFER_SIZE)
-		buf [j++] = line[i++];
-	buf[j] = 0;
-	free(line);
-	return (buf);
-}
-
-char	*read_line(int fd, char *line, char *buffer)
-{
-	int		read_byte;
-	char	*tmp;
-
-	read_byte = 1;
-	while (!found_new_line(line) && read_byte != 0)
-	{
-		read_byte = read(fd, buffer, BUFFER_SIZE);
-		if (read_byte < 0)
+		byte = read(fd, *buff, BUFFER_SIZE);
+		if (byte == -1)
 		{
-			free(buffer);
-			return (NULL);
+			free_ptr(buffer);
+			free_ptr(buff);
+			return (-1);
 		}
-		buffer[read_byte] = 0;
-		tmp = line;
-		line = strjoin(line, buffer);
-		free(tmp);
+		(*buff)[byte] = '\0';
+		temp = *buffer;
+		*buffer = ft_strjoin(temp, *buff);
+		free(temp);
 	}
-	free(buffer);
-	return (line);
+	free_ptr(buff);
+	*buffer = get_line(buffer, line);
+	if (!(**line))
+		free_ptr(line);
+	return (byte);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
-	char		*buffer;
+	static char	*buffer = NULL;
+	char		*buff;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = (char *)malloc(BUFFER_SIZE + 1);
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buff)
+		return (NULL);
 	if (!buffer)
+		buffer = ft_strdup("");
+	if (read_line(fd, &buff, &buffer, &line) == -1 || !line)
 		return (NULL);
-	line = read_line(fd, line, buffer);
-	if (line == NULL)
-		return (NULL);
-	buffer = get_new_line(line);
-	line = fetch(line);
-	return (buffer);
+	return (line);
 }
-//  int	main()
-//  {
-//  	char	*str;
-// 	static int i = 0;
-//  	int fd = open("example.txt", O_RDONLY);
-//  	// while (1)
-//  	// {
-//  		get_next_line(fd);
-//  		get_next_line(fd);
-//  		// if (!str)
-//  		// 	break ;
-//  		// printf("line = %d, str = %s", i,str);
-// 		// i++;
-//  	// 	free(str);
-//  	// }
-// 	// system("leaks a.out");
-//  	// 	str = get_next_line(fd);
-// 	// 	printf("%s",str);
-//  	return (0);
-
-//  }

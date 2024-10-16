@@ -1,9 +1,56 @@
 # include "../include/cub3d.h"
+# include "../include/get_next_line.h"
 
-// void	validating_map(char *line, t_cub3d *cub)
-// {
-	
-// }
+int	check_walls(char *line, int j)
+{
+	int	i;
+
+	i = 0;
+	while (line[++i])
+	{
+		if (j == 0)
+		{
+			if (line[i] != '1' && !is_space(line[i]))
+				return (0);
+		}
+	}
+	if (j == 1)
+	{
+		if (line[0] != '1' || line[i - 2] != '1')
+			return (0);
+	}
+	return (1);
+}
+
+t_map	*lstlast(t_map *node)
+{
+	if (!node)
+		return (NULL);
+	while(node->next != NULL)
+		node = node->next;
+	return (node);
+}
+
+void	add_node(char *line, t_cub3d *cub)
+{
+	t_map	*node;
+	t_map	*last_node;
+
+	node = malloc(sizeof(t_map));
+	node->index = 1;
+	node->line = line;
+	node->next = NULL;
+	if (*cub->map == NULL)
+		*cub->map = node;
+	else
+	{
+		last_node = lstlast((*cub->map));
+		last_node->next = node;
+	}
+
+}
+
+
 
 int	validating_texture(char *line, t_cub3d *cub)
 {
@@ -73,15 +120,18 @@ void	parsing_map(char *line, t_cub3d *cub)
 	int i;
 
 	i = 0;
-	while ((line[i]))
+	while ((line[++i]))
 	{
 		if (line[i] != '1' && line[i] != '0' && line[i] != '\0' \
 			&& line[i] != '\n' && !is_space(line[i]))
 			error("The map should only contain 0 and 1");
-		i++;
 	}
-	(void)cub;
-
+	if (*cub->map == NULL && check_walls(line, 0))
+		add_node(line, cub);
+	else if ((*cub->map) && check_walls(line, 1))
+		add_node(line, cub);
+	else
+		error("Inavlid map, the map should be srounded with walls");
 }
 
 void	parsing(char *filename, t_cub3d *cub)
@@ -115,7 +165,7 @@ void	parsing(char *filename, t_cub3d *cub)
 
 int	check_filename(char *filename)
 {
-	int	len;
+	int		len;
 	t_cub3d	*cub;
 
 	cub = malloc(sizeof(t_cub3d));
@@ -130,12 +180,19 @@ int	check_filename(char *filename)
 		if (ft_strcmp(ft_substr(filename, len - 3, 4), ".cub") == 0)
 		{
 			parsing(filename, cub);
+				t_map	*current = (*cub->map);
 				printf("%s-------------%s\n", "WE", cub->texture->west);
 				printf("%s-------------%s\n", "SO", cub->texture->south);
 				printf("%s-------------%s\n", "EA", cub->texture->east);
 				printf("%s-------------%s\n", "no", cub->texture->north);
 				printf("%s-------------%d\n", "c", cub->C_color);
 				printf("%s-------------%d\n", "WE", cub->F_color);
+				while (current != NULL)
+				{
+					printf(">>>>>>>>>>>>%s", current->line);
+					current = current->next;
+				}
+				
 				return 0;
 		}
 	}

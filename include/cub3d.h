@@ -7,7 +7,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <string.h>
-# include "get_next_line.h"
+# include <stdbool.h>
 
 typedef struct s_texture{
 	char	*north;
@@ -22,14 +22,23 @@ typedef struct s_color{
 	int	blue;
 }	t_color;
 
+typedef struct s_map
+{
+	char			*line;
+	int				index;
+	struct s_map	*next;
+	struct s_map	*prev;
+}	t_map;
+
 typedef struct s_cub3d
 {
-	t_texture	*texture;
 	int			F_color;
 	int			C_color;
-	char		*position;
-	char		**map;
 	int			texture_flag;
+	char		*position;
+	bool		first_last_line;
+	t_texture	*texture;
+	t_map		**map;
 }	t_cub3d;
 
 ///////////////utils///////////////////
@@ -49,9 +58,6 @@ void	init_cub(t_cub3d *cub);
 int		check_filename(char *filename);
 
 ///////////////color///////////////////
-int		r(int color);
-int		g(int color);
-int		b(int color);
 int		rgb(int red, int green, int blue);
 
 //////////////split////////////////////////
