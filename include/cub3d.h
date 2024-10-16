@@ -26,6 +26,7 @@ typedef struct s_map
 {
 	char			*line;
 	int				index;
+	int				len;
 	struct s_map	*next;
 	struct s_map	*prev;
 }	t_map;

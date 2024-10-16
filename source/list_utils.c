@@ -15,7 +15,8 @@ void	add_node(char *line, t_cub3d *cub)
 	t_map	*last_node;
 
 	node = malloc(sizeof(t_map));
-	node->index = 1;
+	node->len = ft_strlen(line);
+	node->index = 0;
 	node->line = line;
 	node->next = NULL;
 	if (*cub->map == NULL)
@@ -23,7 +24,7 @@ void	add_node(char *line, t_cub3d *cub)
 	else
 	{
 		last_node = lstlast((*cub->map));
+		node->index = ++last_node->index;
 		last_node->next = node;
 	}
-
 }

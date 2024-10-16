@@ -31,11 +31,9 @@ int	validating_texture(t_cub3d *cub, char **args)
 int	validating_color(t_cub3d *cub, char **args)
 {
 	t_color		F;
-	t_color		C;
 	
 	if (!ft_strcmp("F", args[0]) && ++cub->texture_flag)
 	{
-
 		F.red = atoi(args[1]);
 		F.green = (atoi(args[2]));
 		F.blue = (atoi(args[3]));
@@ -46,13 +44,13 @@ int	validating_color(t_cub3d *cub, char **args)
 	}
 	else if (!ft_strcmp("C", args[0]) && cub->texture_flag++)
 	{
-		C.red = (atoi(args[1]));
-		C.green = (atoi(args[2]));
-		C.blue = (atoi(args[3]));
-		if (C.blue < 0 || C.blue > 255 || C.red < 0 \
-			|| C.red > 255	|| C.green < 0 || C.green > 255)
+		F.red = (atoi(args[1]));
+		F.green = (atoi(args[2]));
+		F.blue = (atoi(args[3]));
+		if (F.blue < 0 || F.blue > 255 || F.red < 0 \
+			|| F.red > 255	|| F.green < 0 || F.green > 255)
 			error("the cell color should be in 0-255 range");
-		cub->C_color = rgb(C.red, C.green, C.blue);
+		cub->C_color = rgb(F.red, F.green, F.blue);
 	}
 	else if (cub->texture_flag < 6 && cub->texture_flag >= 4)
 		error("There is not any cell or floor color");
@@ -80,7 +78,8 @@ void	parsing_map(char *line, t_cub3d *cub)
 
 void	parsing(t_cub3d *cub, int fd)
 {
-	char	*line;char	**args;
+	char	*line;
+	char	**args;
 
 	if (fd > 0)
 	{
@@ -88,7 +87,7 @@ void	parsing(t_cub3d *cub, int fd)
 		{
 			line = get_next_line(fd);
 			if (!line)
-				return ;
+				break ;
 			line = trim(line);
 			if (*line != 0)
 			{
@@ -103,6 +102,12 @@ void	parsing(t_cub3d *cub, int fd)
 					continue ;
 			}
 		}
+		if ((*cub->map) != NULL)
+		{
+			if (!check_walls((lstlast(*cub->map))->line, 0))
+				error("Inavlid map, the map should be srounded with walls");
+		}
 	}
-	error("file doesn't exist.");
+	else
+		error("file doesn't exist.");
 }
