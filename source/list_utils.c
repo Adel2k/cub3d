@@ -28,3 +28,20 @@ void	add_node(char *line, t_cub3d *cub)
 		last_node->next = node;
 	}
 }
+
+int	count_nodes(t_map **map)
+{
+	t_map	*current;
+	int		i;
+
+	if (!map)
+		return (0);
+	current = *map;
+	i = 0;
+	while (current)
+	{
+		i++;
+		current = current->next;
+	}
+	return (i);
+}

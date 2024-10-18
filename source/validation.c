@@ -65,47 +65,54 @@ void	parsing_map(char *line, t_cub3d *cub)
 	while ((line[++i]))
 	{
 		if (line[i] != '1' && line[i] != '0' && line[i] != '\0' \
-			&& line[i] != '\n' && !is_space(line[i]))
+			&& line[i] != '\n' && line[i] != 'N' && line[i] != 'S' \
+			&& line[i] != 'W' && line[i] != 'E' && !is_space(line[i]))
 			error("The map should only contain 0 and 1");
 	}
-	if (*cub->map == NULL && check_walls(line, 0))
+	if (*cub->map == NULL && check_walls(cub, line, 0))
 		add_node(line, cub);
-	else if ((*cub->map) && check_walls(line, 1))
+	else if ((*cub->map) && check_walls(cub, line, 1))
 		add_node(line, cub);
 	else
 		error("Inavlid map, the map should be srounded with walls");
 }
 
+void	reading_map(t_cub3d *cub, int fd)
+{
+	char	**args;
+	char	*line;
+
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		line = trim(line);
+		if (*line != 0)
+		{
+			if (cub->texture_flag == 6)
+				parsing_map(line, cub);
+			args = ft_split(line, ' ');
+			if (cub->texture_flag < 4 && !validating_texture(cub, args))
+				continue ;
+			args = ft_split(line, ',');
+			if (cub->texture_flag < 6 && cub->texture_flag >= 4 \
+				&& !validating_color(cub, args))
+				continue ;
+		}
+	}
+}
+
 void	parsing(t_cub3d *cub, int fd)
 {
-	char	*line;
-	char	**args;
-
 	if (fd > 0)
 	{
-		while (1)
-		{
-			line = get_next_line(fd);
-			if (!line)
-				break ;
-			line = trim(line);
-			if (*line != 0)
-			{
-				if (cub->texture_flag == 6)
-					parsing_map(line, cub);
-				args = ft_split(line, ' ');
-				if (cub->texture_flag < 4 && !validating_texture(cub, args))
-					continue ;
-				args = ft_split(line, ',');
-				if (cub->texture_flag < 6 && cub->texture_flag >= 4 \
-					&& !validating_color(cub, args))
-					continue ;
-			}
-		}
+		reading_map(cub, fd);
 		if ((*cub->map) != NULL)
 		{
-			if (!check_walls((lstlast(*cub->map))->line, 0))
+			if (!check_walls(cub, (lstlast(*cub->map))->line, 0))
 				error("Inavlid map, the map should be srounded with walls");
+			cub->height = count_nodes(cub->map);
 		}
 	}
 	else
