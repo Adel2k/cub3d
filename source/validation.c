@@ -112,6 +112,8 @@ void	parsing(t_cub3d *cub, int fd)
 		{
 			if (!check_walls(cub, (lstlast(*cub->map))->line, 0))
 				error("Inavlid map, the map should be srounded with walls");
+			if (cub->player->flag == false)
+				error("There should be a player in map");
 			cub->height = count_nodes(cub->map);
 		}
 	}
