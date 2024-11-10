@@ -9,12 +9,42 @@
 # include <string.h>
 # include <stdbool.h>
 
+# define ESC 53
+# define M 46
+# define E 14
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+# define LARROW 123
+# define RARROW 124
+
+# define AROTATE 0.07
+# define MROTATE 0.03
+# define WSPEED 0.15
+# define SSPEED 0.1
+# define ADSPEED 0.12
+
+# define MAP_WIDTH 36
+# define MAP_HEIGHT 11
+# define TILE_SIZE 10
+
 typedef struct s_player
 {
 	int		x;
 	int		y;
 	char	pos;
 	bool	flag;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 }	t_player;
 
 typedef struct s_texture{
@@ -30,6 +60,14 @@ typedef struct s_color{
 	int	blue;
 }	t_color;
 
+typedef struct s_mlx
+{
+	void	*ptr;
+	void	*win;
+	int		height;
+	int		width;
+}	t_mlx;
+
 typedef struct s_map
 {
 	char			*line;
@@ -39,17 +77,50 @@ typedef struct s_map
 	struct s_map	*prev;
 }	t_map;
 
+typedef struct s_img
+{
+	int		wd;
+	int		ht;
+	int		endian;
+	int		line_length;
+	int		bits_per_pixel;
+	char	*addr;
+	void	*img;
+}	t_img;
+
+typedef struct s_raycasting
+{
+	int		hit;
+	int		side;
+	double	ray_x;
+	double	ray_y;
+	double	camera_x;
+	double	sdist_x;
+	double	sdist_y;
+	double	deltadist_x;
+	double	deltadist_y;
+	double	perp_wall_dist;
+}	t_raycasting;
+
 typedef struct s_cub3d
 {
 	int			F_color;
 	int			C_color;
+	int			hiding_map;
 	int			texture_flag;
 	char		*position;
 	bool		first_last_line;
 	int			height;
+	t_raycasting	ray;
+	t_img		img;
+	t_img		*gun;
+	t_img		*wall;
+	t_img		cdoor;
+	t_img		odoor;
+	t_mlx		mlx;
 	t_texture	*texture;
 	t_map		**map;
-	t_player	*player;
+	t_player	player;
 }	t_cub3d;
 
 ///////////////utils///////////////////
@@ -95,6 +166,22 @@ void	error(char *msg);
 void	init_cub(t_cub3d *cub);
 
 
+//////////////move_keys////////////////////////
+int		mouse_move(int x, int y, t_cub3d *cub);
+int		key_press(int key, t_cub3d *cub);
 
+//////////////game////////////////////////
+void	start_game(t_cub3d cub);
+
+//////////////starting_game////////////////////////
+int		re_draw(t_cub3d *cub);
+void	init_img_info(t_cub3d *cub);
+
+//////////////exiting////////////////////////
+int		press(t_cub3d *cub);
+
+//////////////drawing////////////////////////
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+unsigned int	my_mlx_color_taker(t_img *data, int j, int i);
 
 #endif

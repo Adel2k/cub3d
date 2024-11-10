@@ -52,23 +52,24 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
-				t_map	*current = (*cub->map);
-				printf("%s-------------%s\n", "WE", cub->texture->west);
-				printf("%s-------------%s\n", "SO", cub->texture->south);
-				printf("%s-------------%s\n", "EA", cub->texture->east);
-				printf("%s-------------%s\n", "no", cub->texture->north);
-				printf("%s-------------%d\n", "c", cub->C_color);
-				printf("%s-------------%d\n", "WE", cub->F_color);
-				while (current != NULL)
-				{
-					printf(">>>>>>>>>>>>%s", current->line);
-					current = current->next;
-				}
-				printf("\n%d\n", cub->height);
-				printf("%d\n", cub->player->x);
-				printf("%d\n", cub->player->y);
-				
-				return 0;
+			start_game(cub);
+			t_map	*current = (*cub->map);
+			printf("%s-------------%s\n", "WE", cub->texture->west);
+			printf("%s-------------%s\n", "SO", cub->texture->south);
+			printf("%s-------------%s\n", "EA", cub->texture->east);
+			printf("%s-------------%s\n", "no", cub->texture->north);
+			printf("%s-------------%d\n", "c", cub->C_color);
+			printf("%s-------------%d\n", "WE", cub->F_color);
+			while (current != NULL)
+			{
+				printf(">>>>>>>>>>>>%s", current->line);
+				current = current->next;
+			}
+			printf("\n%d\n", cub->height);
+			printf("%d\n", cub->player->x);
+			printf("%d\n", cub->player->y);
+			
+			return 0;
 		}
 	}
 	error("passed file should be with <.cub>");
@@ -89,22 +90,26 @@ int	find_player(t_cub3d *cub, int i)
 	cub->player->y = count_nodes(cub->map);
 	if ((*cub->map)->line[i] == 'N')
 	{
-		cub->player->pos = 'N';
+		cub->player.dir_x = -1;
+		cub->player.plane_y = 0.66;
 		return (1);
 	}
 	if ((*cub->map)->line[i] == 'W')
 	{
-		cub->player->pos = 'W';
+		cub->player.dir_x = -1;
+		cub->player.plane_y = -0.66;
 		return (1);
 	}
 	if ((*cub->map)->line[i] == 'E')
 	{
-		cub->player->pos = 'E';
+		cub->player.dir_y = 1;
+		cub->player.plane_x = 0.66;
 		return (1);
 	}
 	if ((*cub->map)->line[i] == 'S')
 	{
-		cub->player->pos = 'S';
+		cub->player.dir_y = 1;
+		cub->player.plane_x = -0.66;
 		return (1);
 	}
 	return (0);
