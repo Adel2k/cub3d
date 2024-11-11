@@ -19,7 +19,7 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 			{
 				if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'))
 				{
-					if (cub->player->flag == false && !find_player(cub, i))
+					if (cub->player.flag == false && !find_player(cub, i))
 						return (1);
 					else 
 						error("just one player you can have");
@@ -52,7 +52,7 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
-			start_game(cub);
+			// start_game(*cub);
 			t_map	*current = (*cub->map);
 			printf("%s-------------%s\n", "WE", cub->texture->west);
 			printf("%s-------------%s\n", "SO", cub->texture->south);
@@ -66,8 +66,6 @@ int	check_filename(char *filename)
 				current = current->next;
 			}
 			printf("\n%d\n", cub->height);
-			printf("%d\n", cub->player->x);
-			printf("%d\n", cub->player->y);
 			
 			return 0;
 		}
@@ -85,9 +83,11 @@ int	is_space(char c)
 
 int	find_player(t_cub3d *cub, int i)
 {
-	cub->player->flag = true;
-	cub->player->x = i;
-	cub->player->y = count_nodes(cub->map);
+	cub->player.flag = true;
+	cub->player.dir_x = 0;
+	cub->player.dir_y = 0;
+	cub->player.plane_x = 0;
+	cub->player.plane_y = 0;
 	if ((*cub->map)->line[i] == 'N')
 	{
 		cub->player.dir_x = -1;

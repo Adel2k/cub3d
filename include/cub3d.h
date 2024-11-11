@@ -109,6 +109,12 @@ typedef struct s_cub3d
 	int			hiding_map;
 	int			texture_flag;
 	char		*position;
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
+	char			*Fcolor;
+	char			*Ccolor;
 	bool		first_last_line;
 	int			height;
 	t_raycasting	ray;
@@ -164,6 +170,7 @@ void	error(char *msg);
 
 //////////////init////////////////////////
 void	init_cub(t_cub3d *cub);
+void	path_init(t_cub3d *vars, char	**s, int i, int j);
 
 
 //////////////move_keys////////////////////////
