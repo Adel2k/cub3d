@@ -52,7 +52,7 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
-			// start_game(*cub);
+			start_game(*cub);
 			t_map	*current = (*cub->map);
 			printf("%s-------------%s\n", "WE", cub->texture->west);
 			printf("%s-------------%s\n", "SO", cub->texture->south);

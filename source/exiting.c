@@ -28,8 +28,8 @@
 // 		exit(0);
 // }
 
-int	press(t_cub3d *cub)
-{
-	ft_free_cub(cub, 2, "");
-	return (0);
-}
+// int	press(t_cub3d *cub)
+// {
+// 	ft_free_cub(cub, 2, "");
+// 	return (0);
+// }

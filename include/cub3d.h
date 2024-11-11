@@ -8,6 +8,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdbool.h>
+# include "../minilibx-linux/mlx.h"
 
 # define ESC 53
 # define M 46
@@ -64,8 +65,8 @@ typedef struct s_mlx
 {
 	void	*ptr;
 	void	*win;
-	int		height;
-	int		width;
+	int		height; //map_ht
+	int		width; //map_wd
 }	t_mlx;
 
 typedef struct s_map
@@ -88,6 +89,17 @@ typedef struct s_img
 	void	*img;
 }	t_img;
 
+typedef struct s_draw
+{
+	int		tex_x;
+	int		tex_y;
+	int		draw_end;
+	int		draw_start;
+	int		line_height;
+	double	step;
+	double	tex_pos;
+}	t_draw;
+
 typedef struct s_raycasting
 {
 	int		hit;
@@ -109,12 +121,9 @@ typedef struct s_cub3d
 	int			hiding_map;
 	int			texture_flag;
 	char		*position;
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
 	char			*Fcolor;
 	char			*Ccolor;
+	char			**maze;
 	bool		first_last_line;
 	int			height;
 	t_raycasting	ray;
@@ -170,12 +179,15 @@ void	error(char *msg);
 
 //////////////init////////////////////////
 void	init_cub(t_cub3d *cub);
-void	path_init(t_cub3d *vars, char	**s, int i, int j);
+void	get_maze(t_cub3d *cub);
 
 
 //////////////move_keys////////////////////////
 int		mouse_move(int x, int y, t_cub3d *cub);
 int		key_press(int key, t_cub3d *cub);
+void	move_w(t_cub3d *cub, double move);
+void	move_s(t_cub3d *cub, double move);
+void	move_right_left(t_cub3d *cub, int key, double move);
 
 //////////////game////////////////////////
 void	start_game(t_cub3d cub);
@@ -185,10 +197,41 @@ int		re_draw(t_cub3d *cub);
 void	init_img_info(t_cub3d *cub);
 
 //////////////exiting////////////////////////
-int		press(t_cub3d *cub);
+// int		press(t_cub3d *cub);
 
 //////////////drawing////////////////////////
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 unsigned int	my_mlx_color_taker(t_img *data, int j, int i);
+void	draw_texture(t_cub3d *cub, int x, int tex_x);
+t_img	*choose_texture(t_cub3d *cub);
 
+//////////////animation////////////////////////
+void	print_gun(t_cub3d *cub, int i);
+void	anim(t_cub3d *cub);
+
+//////////////raycasting////////////////////////
+void	raycasting(t_cub3d *cub);
+void	draw_floor(t_cub3d *cub);
+
+//////////////view////////////////////////
+void	change_view(t_cub3d *cub, int side, double rotate);
+void	rotate_view(t_cub3d *cub, double prevdir_x,
+	double prevplane_x, double rotate);
+void	get_dir(t_cub3d *cub);
+
+
+//////////////algorithm////////////////////////
+void	ray_pos(t_cub3d *cub, int w);
+void	dda_algorithm(t_cub3d *cub);
+void	step_dir(t_cub3d *cub);
+void	calc_draw_ends(t_cub3d *cub, t_draw *tex);
+int	calc_texture_x(t_cub3d *cub);
+//////////////minimap////////////////////////
+int	draw_minimap(t_cub3d *cub);
+
+void	get_wall__textures(t_cub3d *cub);
+void	set_wall_textures(t_cub3d *cub);
+void	open_close_door(t_cub3d *cub);
+void	create_image(t_cub3d *cub);
+void	get_door(t_img *door, t_cub3d *cub, char *path);
 #endif
