@@ -115,7 +115,6 @@ void	parsing(t_cub3d *cub, int fd)
 			if (cub->player.flag == false)
 				error("There should be a player in map");
 			cub->height = count_nodes(cub->map);
-			// path_init(cub,);
 		}
 	}
 	else

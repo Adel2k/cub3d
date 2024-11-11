@@ -8,7 +8,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdbool.h>
-# include "../minilibx-linux/mlx.h"
+# include "../mlx/mlx.h"
 
 # define ESC 53
 # define M 46
@@ -121,9 +121,7 @@ typedef struct s_cub3d
 	int			hiding_map;
 	int			texture_flag;
 	char		*position;
-	char			*Fcolor;
-	char			*Ccolor;
-	char			**maze;
+	char		**maze;
 	bool		first_last_line;
 	int			height;
 	t_raycasting	ray;
