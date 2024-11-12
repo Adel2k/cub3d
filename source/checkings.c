@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checkings.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: By: aeminian <aeminian@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 10:56:19 by adel              #+#    #+#             */
+/*   Updated: 2024/11/12 10:56:20 by adel             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "../include/cub3d.h"
 
 int	check_walls(t_cub3d *cub, char *line, int j)
@@ -88,6 +100,13 @@ int	find_player(t_cub3d *cub, int i)
 	cub->player.dir_y = 0;
 	cub->player.plane_x = 0;
 	cub->player.plane_y = 0;
+	if (set_player_dir(cub, i) == 1)
+		return (1);
+	return (0);
+}
+
+int	set_player_dir(t_cub3d *cub, int i)
+{
 	if ((*cub->map)->line[i] == 'N')
 	{
 		cub->player.dir_x = -1;
