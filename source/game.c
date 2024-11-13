@@ -16,14 +16,13 @@ void	start_game(t_cub3d cub)
 {
 	cub.mlx.ptr = mlx_init();
 	cub.mlx.win = mlx_new_window(cub.mlx.ptr, cub.mlx.width,
-			cub.mlx.height, "GAME");
-	printf("%d\n", cub.mlx.height);
-	printf("%d\n", cub.mlx.width);
+			cub.mlx.height, "cub3D");
 
-	// if (!cub.mlx.win)
+	if (!cub.mlx.win)
+		exit(1);
 	// 	ft_free_cub(&cub, 1, "Can't open window");
 	init_img_info(&cub);
-	// raycasting(&cub);
+	raycasting(&cub);
 	// mlx_hook(cub.mlx.win, 2, 0, &key_press, &cub);
 	// mlx_hook(cub.mlx.win, 6, 0, &mouse_move, &cub);
 	// mlx_loop_hook(cub.mlx.ptr, &re_draw, &cub);

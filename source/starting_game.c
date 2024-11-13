@@ -39,9 +39,10 @@ void	get_gun_textures(t_cub3d *cub)
 	int	i;
 
 	set_gun_textures(cub);
-	// if (!cub->gun[0].img || !cub->gun[1].img
-	// 	|| !cub->gun[2].img || !cub->gun[3].img
-	// 	|| !cub->gun[4].img)
+	if (!cub->gun[0].img || !cub->gun[1].img
+		|| !cub->gun[2].img || !cub->gun[3].img
+		|| !cub->gun[4].img)
+		exit(1);
 	// 	ft_free_cub(cub, 1, "Bad Images");
 	i = -1;
 	while (++i < 5)
@@ -49,7 +50,8 @@ void	get_gun_textures(t_cub3d *cub)
 		cub->gun[i].addr = mlx_get_data_addr(cub->gun[i].img,
 				&cub->gun[i].bits_per_pixel, &cub->gun[i].line_length,
 				&cub->gun[i].endian);
-		// if (!cub->gun[i].addr)
+		if (!cub->gun[i].addr)
+			exit(1);
 		// 	ft_free_cub(cub, 1, "ADDR error");
 	}
 }
