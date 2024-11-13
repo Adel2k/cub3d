@@ -64,6 +64,14 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
+			int	count = 1;
+	while ((*cub->map)->next)
+	{
+		count++;
+		(*cub->map) = (*cub->map)->next;
+	}
+	cub->maze = malloc(sizeof(char *) * (count + 1));
+	get_maze(cub);
 			start_game(*cub);
 			t_map	*current = (*cub->map);
 			printf("%s-------------%s\n", "WE", cub->texture->west);
