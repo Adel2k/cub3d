@@ -81,10 +81,10 @@ void	parsing_map(char *line, t_cub3d *cub)
 			&& line[i] != 'W' && line[i] != 'E' && !is_space(line[i]))
 			error("The map should only contain 0 and 1");
 	}
-	if (*cub->map == NULL && check_walls(cub, line, 0))
-		add_node(line, cub);
-	else if ((*cub->map) && check_walls(cub, line, 1))
-		add_node(line, cub);
+	if (cub->map == NULL && check_walls(cub, line, 0))
+		add_node(&line, &cub->map);
+	else if (cub->map && check_walls(cub, line, 1))
+		add_node(&line, &cub->map);
 	else
 		error("Inavlid map, the map should be srounded with walls");
 }
@@ -120,13 +120,13 @@ void	parsing(t_cub3d *cub, int fd)
 	if (fd > 0)
 	{
 		reading_map(cub, fd);
-		if ((*cub->map) != NULL)
+		if (cub->map != NULL)
 		{
-			if (!check_walls(cub, (lstlast(*cub->map))->line, 0))
+			if (!check_walls(cub, (lstlast(cub->map))->line, 0))
 				error("Inavlid map, the map should be srounded with walls");
 			if (cub->player.flag == false)
 				error("There should be a player in map");
-			cub->height = count_nodes(cub->map);
+			cub->height = count_nodes(&cub->map);
 		}
 	}
 	else

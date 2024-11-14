@@ -64,16 +64,15 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
-			int	count = 1;
-	while ((*cub->map)->next)
-	{
-		count++;
-		(*cub->map) = (*cub->map)->next;
-	}
-	cub->maze = malloc(sizeof(char *) * (count + 1));
-	get_maze(cub);
-			start_game(*cub);
-			t_map	*current = (*cub->map);
+	// 		int	count = 1;
+	// while (cub->map->next)
+	// {
+	// 	count++;
+	// 	cub->map = cub->map->next;
+	// }
+	// cub->maze = malloc(sizeof(char *) * (count + 1));
+	// get_maze(cub);
+			t_map	*current = cub->map;
 			printf("%s-------------%s\n", "WE", cub->texture->west);
 			printf("%s-------------%s\n", "SO", cub->texture->south);
 			printf("%s-------------%s\n", "EA", cub->texture->east);
@@ -82,10 +81,11 @@ int	check_filename(char *filename)
 			printf("%s-------------%d\n", "WE", cub->F_color);
 			while (current != NULL)
 			{
-				printf(">>>>>>>>>>>>%s", current->line);
+				printf(">>>>>>>>>>>>%s", cub->map->line);
 				current = current->next;
 			}
 			printf("\n%d\n", cub->height);
+			// start_game(*cub);
 			
 			return 0;
 		}
@@ -115,25 +115,25 @@ int	find_player(t_cub3d *cub, int i)
 
 int	set_player_dir(t_cub3d *cub, int i)
 {
-	if ((*cub->map)->line[i] == 'N')
+	if (cub->map->line[i] == 'N')
 	{
 		cub->player.dir_x = -1;
 		cub->player.plane_y = 0.66;
 		return (1);
 	}
-	if ((*cub->map)->line[i] == 'W')
+	if (cub->map->line[i] == 'W')
 	{
 		cub->player.dir_x = -1;
 		cub->player.plane_y = -0.66;
 		return (1);
 	}
-	if ((*cub->map)->line[i] == 'E')
+	if (cub->map->line[i] == 'E')
 	{
 		cub->player.dir_y = 1;
 		cub->player.plane_x = 0.66;
 		return (1);
 	}
-	if ((*cub->map)->line[i] == 'S')
+	if (cub->map->line[i] == 'S')
 	{
 		cub->player.dir_y = 1;
 		cub->player.plane_x = -0.66;

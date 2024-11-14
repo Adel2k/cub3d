@@ -23,9 +23,12 @@ void	init_cub(t_cub3d *cub)
 	cub->maze = NULL;
 	cub->wall = NULL;
 	cub->map = NULL;
-	cub->map = malloc(sizeof(t_map *));
-	if (!cub->map)
-		error("allocation failed.");
+	cub->map = malloc(sizeof(t_map));
+	// if (!cub->map)
+	// 	free_and_error(cub->map, 1, "There isn't map");
+	cub->map->next = NULL;
+	cub->map->prev = NULL;
+	cub->map->line = NULL;
 	cub->player.flag = false;
 	// cub->player = malloc(sizeof(t_player));
 	// if (!cub->player)
@@ -33,7 +36,7 @@ void	init_cub(t_cub3d *cub)
 	
 	// if (!cub->player)
 		// 	error("allocation failed.");
-	*cub->map = NULL;
+	cub->map = NULL;
 	cub->first_last_line = false;
 	cub->texture = malloc(sizeof(t_texture));
 	if (!cub->texture)
@@ -47,12 +50,14 @@ void	get_maze(t_cub3d *cub)
 	i = 0;
 	cub->mlx.width = 1000;
 	cub->mlx.height = 720;
-	while ((*cub->map)->next)
+	while (cub->map->next)
 	{
-		cub->maze[i] = (*cub->map)->line;
+		cub->maze[i] = cub->map->line;
 		i++;
-		(*cub->map) = (*cub->map)->next;
+		cub->map = cub->map->next;
 	}
-	cub->maze[i++] = (*cub->map)->line;
+	cub->maze[i++] = cub->map->line;
 	cub->maze[i] = NULL;
+	while (cub->map->prev)
+		cub->map = cub->map->prev;
 }

@@ -22,6 +22,7 @@ void	start_game(t_cub3d cub)
 		ft_free_cub(&cub, 1, "Can't open window");
 	init_img_info(&cub);
 	raycasting(&cub);
+	printf("%d", cub.wall->wd);
 	mlx_hook(cub.mlx.win, 2, 0, &key_press, &cub);
 	mlx_hook(cub.mlx.win, 6, 0, &mouse_move, &cub);
 	mlx_loop_hook(cub.mlx.ptr, &re_draw, &cub);

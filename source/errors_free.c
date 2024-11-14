@@ -26,3 +26,20 @@ void	error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
+void	free_and_error(char **str, int flag, char *s)
+{
+	int	i;
+
+	i = 0;
+	if (str != NULL)
+	{
+		while (str[i])
+		{
+			free(str[i]);
+			i++;
+		}
+	}
+	free(str);
+	if (flag == 1)
+		exit(1 && printf("%s\n", s));
+}

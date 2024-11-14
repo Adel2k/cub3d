@@ -13,23 +13,6 @@
 # include "../include/cub3d.h"
 
 
-void	ft_lstclear(t_map **lst)
-{
-	t_map	*tmp;
-
-	if (!lst || !(*lst))
-		return ;
-	while (*lst)
-	{
-		tmp = (*lst)->next;
-		if ((*lst)->line != NULL)
-			free((*lst)->line);
-		free(*lst);
-		*lst = tmp;
-	}
-	*lst = NULL;
-}
-
 void	destroy_gun(t_cub3d *cub)
 {
 	if (cub->gun[0].img)
@@ -74,7 +57,7 @@ void	ft_free_cub(t_cub3d *cub, int flag, char *s)
 	if (cub->wall)
 		destroy_img(cub);
 	if (cub->map)
-		ft_lstclear(cub->map);
+		ft_lstclear(&cub->map);
 	if (cub->maze)
 		free(cub->maze);
 	free(cub->map);

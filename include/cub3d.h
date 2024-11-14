@@ -144,7 +144,7 @@ typedef struct s_cub3d
 	t_img			odoor;
 	t_mlx			mlx;
 	t_texture		*texture;
-	t_map			**map;
+	t_map			*map;
 	t_player		player;
 }	t_cub3d;
 
@@ -174,8 +174,10 @@ char			**ft_split(char *s, char c);
 
 //////////////list_utils/////////////////////////////////
 t_map			*lstlast(t_map *node);
-void			add_node(char *line, t_cub3d *cub);
+void			add_node(char **line, t_map **cub);
 int				count_nodes(t_map **map);
+t_map			*ft_lstnew(int len, char *row, int index);
+void			ft_lstclear(t_map **lst);
 
 //////////////checkings//////////////////////////////////
 int				check_walls(t_cub3d *cub, char *line, int j);
@@ -187,6 +189,7 @@ int				set_player_dir(t_cub3d *cub, int i);
 //////////////error&free////////////////////////////////
 void			malloc_check(char *str);
 void			error(char *msg);
+void			free_and_error(char **str, int flag, char *s);
 
 //////////////init//////////////////////////////////////
 void			init_cub(t_cub3d *cub);

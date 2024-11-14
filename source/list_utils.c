@@ -21,24 +21,25 @@ t_map	*lstlast(t_map *node)
 	return (node);
 }
 
-void	add_node(char *line, t_cub3d *cub)
+void	add_node(char **line, t_map **stack)
 {
-	t_map	*node;
-	t_map	*last_node;
+	size_t	i;
+	t_map	*tmp;
 
-	node = malloc(sizeof(t_map));
-	node->len = ft_strlen(line);
-	node->index = 0;
-	node->line = line;
-	node->next = NULL;
-	if (*cub->map == NULL)
-		*cub->map = node;
-	else
+	i = 0;
+	tmp = *stack;
+	(*stack)->next = ft_lstnew(ft_strlen(line[i]), line[i], i - 6);
+	if (!(*stack)->next)
 	{
-		last_node = lstlast((*cub->map));
-		node->index = ++last_node->index;
-		last_node->next = node;
+		ft_lstclear(&tmp->next);
+		free_and_error(line, 1, "Malloc error");
 	}
+	(*stack)->next->prev = (*stack);
+	*stack = (*stack)->next;
+	(*stack)->next = NULL;
+	(*stack) = tmp->next;
+	(*stack)->prev = NULL;
+	free(tmp);
 }
 
 int	count_nodes(t_map **map)
@@ -56,4 +57,36 @@ int	count_nodes(t_map **map)
 		current = current->next;
 	}
 	return (i);
+}
+
+t_map	*ft_lstnew(int len, char *row, int index)
+{
+	t_map	*res;
+
+	res = malloc(sizeof(t_map));
+	if (!res)
+		return (NULL);
+	res->len = len;
+	res->line = row;
+	res->index = index;
+	res->prev = NULL;
+	res->next = NULL;
+	return (res);
+}
+
+void	ft_lstclear(t_map **lst)
+{
+	t_map	*tmp;
+
+	if (!lst || !(*lst))
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		if ((*lst)->line != NULL)
+			free((*lst)->line);
+		free(*lst);
+		*lst = tmp;
+	}
+	*lst = NULL;
 }
