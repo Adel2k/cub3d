@@ -14,10 +14,9 @@
 
 int	key_press(int key, t_cub3d *cub)
 {
-	// if (key == ESC)
-	// 	ft_free_cub(cub, 2, "");
-    //poxel else if i
-	if (key == LARROW)
+	if (key == ESC)
+		ft_free_cub(cub, 2, "");
+	else if (key == LARROW)
 		change_view(cub, LARROW, AROTATE);
 	else if (key == RARROW)
 		change_view(cub, RARROW, AROTATE);

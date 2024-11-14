@@ -15,8 +15,8 @@
 void	set_gun_textures(t_cub3d *cub)
 {
 	cub->gun = malloc(sizeof(t_img) * 5);
-	// if (!cub->gun)
-	// 	ft_free_cub(cub, 1, "Malloc error");
+	if (!cub->gun)
+		ft_free_cub(cub, 1, "Malloc error");
 	cub->gun[0].img = mlx_xpm_file_to_image(cub->mlx.ptr,
 			"./textures/00_frame.xpm", &cub->gun[0].wd,
 			&cub->gun[0].ht);
@@ -42,8 +42,7 @@ void	get_gun_textures(t_cub3d *cub)
 	if (!cub->gun[0].img || !cub->gun[1].img
 		|| !cub->gun[2].img || !cub->gun[3].img
 		|| !cub->gun[4].img)
-		exit(1);
-	// 	ft_free_cub(cub, 1, "Bad Images");
+		ft_free_cub(cub, 1, "Bad Images");
 	i = -1;
 	while (++i < 5)
 	{
@@ -51,8 +50,7 @@ void	get_gun_textures(t_cub3d *cub)
 				&cub->gun[i].bits_per_pixel, &cub->gun[i].line_length,
 				&cub->gun[i].endian);
 		if (!cub->gun[i].addr)
-			exit(1);
-		// 	ft_free_cub(cub, 1, "ADDR error");
+			ft_free_cub(cub, 1, "ADDR error");
 	}
 }
 

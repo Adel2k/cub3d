@@ -206,8 +206,9 @@ void			start_game(t_cub3d cub);
 int				re_draw(t_cub3d *cub);
 void			init_img_info(t_cub3d *cub);
 
-//////////////exiting////////////////////////
-// int		press(t_cub3d *cub);
+//////////////exiting//////////////////////////////////
+int				press(t_cub3d *cub);
+void			ft_free_cub(t_cub3d *cub, int flag, char *s);
 
 ////////////////////////drawing////////////////////////
 void			my_mlx_pixel_put(t_img *img, int x, int y, int color);

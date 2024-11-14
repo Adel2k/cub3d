@@ -38,14 +38,12 @@ void	create_image(t_cub3d *cub)
 	cub->img.img = mlx_new_image(cub->mlx.ptr,
 			cub->mlx.width, cub->mlx.height);
 	if (!cub->img.img)
-		exit(1);
-	// 	ft_free_cub(cub, 1, "Can't create image");
+		ft_free_cub(cub, 1, "Can't create image");
 	cub->img.addr = mlx_get_data_addr(cub->img.img,
 			&cub->img.bits_per_pixel, &cub->img.line_length,
 			&cub->img.endian);
 	if (!cub->img.addr)
-		exit(1);
-	// 	ft_free_cub(cub, 1, "ADDR error");
+		ft_free_cub(cub, 1, "ADDR error");
 	cub->img.wd = cub->mlx.width;
 	cub->img.ht = cub->mlx.height;
 }
@@ -54,21 +52,20 @@ void	get_door(t_img *door, t_cub3d *cub, char *path)
 {
 	door->img = mlx_xpm_file_to_image(cub->mlx.ptr,
 			path, &door->wd, &door->ht);
-	// if (!door->img)
-	// 	ft_free_cub(cub, 1, "Bad Images");
+	if (!door->img)
+		ft_free_cub(cub, 1, "Bad Images");
 	door->addr = mlx_get_data_addr(door->img,
 			&door->bits_per_pixel, &door->line_length,
 			&door->endian);
 	if (!door->addr)
-		exit(1);
-	// 	ft_free_cub(cub, 1, "ADDR error");
+		ft_free_cub(cub, 1, "ADDR error");
 }
 
 void	set_wall_textures(t_cub3d *cub)
 {
 	cub->wall = malloc(sizeof(t_img) * 4);
-	// if (!cub->wall)
-	// 	ft_free_cub(cub, 1, "Malloc error");
+	if (!cub->wall)
+		ft_free_cub(cub, 1, "Malloc error");
 	cub->wall[0].img = mlx_xpm_file_to_image(cub->mlx.ptr,
 			cub->texture->west, &cub->wall[0].wd, &cub->wall[0].ht);
 	cub->wall[1].img = mlx_xpm_file_to_image(cub->mlx.ptr,
@@ -92,8 +89,7 @@ void	get_wall__textures(t_cub3d *cub)
 		|| cub->wall[0].ht != cub->wall[2].ht
 		|| cub->wall[0].wd != cub->wall[3].wd
 		|| cub->wall[0].ht != cub->wall[3].ht)
-		exit(1 && printf("here\n"));
-		// ft_free_cub(cub, 1, "Bad Images");
+		ft_free_cub(cub, 1, "Bad Images");
 	i = -1;
 	while (++i < 4)
 	{
@@ -101,7 +97,6 @@ void	get_wall__textures(t_cub3d *cub)
 				&cub->wall[i].bits_per_pixel, &cub->wall[i].line_length,
 				&cub->wall[i].endian);
 		if (!cub->wall[i].addr)
-			exit(1);
-			// ft_free_cub(cub, 1, "ADDR error");
+			ft_free_cub(cub, 1, "ADDR error");
 	}
 }
