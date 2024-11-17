@@ -21,25 +21,29 @@ t_map	*lstlast(t_map *node)
 	return (node);
 }
 
-void	add_node(char **line, t_map **stack)
+void add_node(char *line, t_map **stack, int index)
 {
-	size_t	i;
-	t_map	*tmp;
+	t_map *new_node;
+	t_map *tmp;
 
-	i = 0;
-	tmp = *stack;
-	(*stack)->next = ft_lstnew(ft_strlen(line[i]), line[i], i - 6);
-	if (!(*stack)->next)
+	printf("this is -> %p\n", &(*stack));
+	new_node = ft_lstnew(ft_strlen(line), line, index - 6);
+	if (!new_node)
 	{
-		ft_lstclear(&tmp->next);
-		free_and_error(line, 1, "Malloc error");
+		ft_lstclear(stack);
+		// free_and_error(line, 1, "Malloc error");
+		return;
 	}
-	(*stack)->next->prev = (*stack);
-	*stack = (*stack)->next;
-	(*stack)->next = NULL;
-	(*stack) = tmp->next;
-	(*stack)->prev = NULL;
-	free(tmp);
+	if (*stack == NULL) // If the list is empty
+		*stack = new_node;
+	else
+	{
+		tmp = *stack;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new_node;
+		new_node->prev = tmp;
+	}
 }
 
 int	count_nodes(t_map **map)

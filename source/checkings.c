@@ -64,12 +64,12 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
-	// 		int	count = 1;
-	// while (cub->map->next)
-	// {
-	// 	count++;
-	// 	cub->map = cub->map->next;
-	// }
+			int	count = 1;
+	while (cub->map->next)
+	{
+		count++;
+		cub->map = cub->map->next;
+	}
 	// cub->maze = malloc(sizeof(char *) * (count + 1));
 	// get_maze(cub);
 			t_map	*current = cub->map;
@@ -81,7 +81,8 @@ int	check_filename(char *filename)
 			printf("%s-------------%d\n", "WE", cub->F_color);
 			while (current != NULL)
 			{
-				printf(">>>>>>>>>>>>%s", cub->map->line);
+				printf(">>>>>>>>>>>>%s\n", cub->map->line);
+				// printf(">>>>>>>>>>>>%s\n", cub->map->next->line);
 				current = current->next;
 			}
 			printf("\n%d\n", cub->height);

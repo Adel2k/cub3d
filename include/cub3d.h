@@ -161,7 +161,7 @@ void			*ft_memcpy(void *dest, const void *src, size_t n);
 
 ///////////////validation////////////////////////////////
 void			parsing(t_cub3d *cub, int fd);
-void			parsing_map(char *line, t_cub3d *cub);
+void			parsing_map(char *line, t_cub3d *cub, int index);
 int				validating_color(t_cub3d *cub, char **args);
 int				validating_texture(t_cub3d *cub, char **args);
 void			reading_map(t_cub3d *cub, int fd);
@@ -174,7 +174,7 @@ char			**ft_split(char *s, char c);
 
 //////////////list_utils/////////////////////////////////
 t_map			*lstlast(t_map *node);
-void			add_node(char **line, t_map **cub);
+void			add_node(char *line, t_map **cub, int index);
 int				count_nodes(t_map **map);
 t_map			*ft_lstnew(int len, char *row, int index);
 void			ft_lstclear(t_map **lst);

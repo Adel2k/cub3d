@@ -69,7 +69,7 @@ int	validating_color(t_cub3d *cub, char **args)
 	return (1);
 }
 
-void	parsing_map(char *line, t_cub3d *cub)
+void	parsing_map(char *line, t_cub3d *cub, int index)
 {
 	int i;
 
@@ -81,10 +81,12 @@ void	parsing_map(char *line, t_cub3d *cub)
 			&& line[i] != 'W' && line[i] != 'E' && !is_space(line[i]))
 			error("The map should only contain 0 and 1");
 	}
-	if (cub->map == NULL && check_walls(cub, line, 0))
-		add_node(&line, &cub->map);
+	if (!cub->map && check_walls(cub, line, 0))
+	{
+		add_node(line, &cub->map, index);
+	}
 	else if (cub->map && check_walls(cub, line, 1))
-		add_node(&line, &cub->map);
+		add_node(line, &cub->map, index);
 	else
 		error("Inavlid map, the map should be srounded with walls");
 }
@@ -93,7 +95,9 @@ void	reading_map(t_cub3d *cub, int fd)
 {
 	char	**args;
 	char	*line;
+	int		index;
 
+	index = 6;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -103,7 +107,10 @@ void	reading_map(t_cub3d *cub, int fd)
 		if (*line != 0)
 		{
 			if (cub->texture_flag == 6)
-				parsing_map(line, cub);
+			{
+				parsing_map(line, cub, index);
+				index++;
+			}
 			args = ft_split(line, ' ');
 			if (cub->texture_flag < 4 && !validating_texture(cub, args))
 				continue ;
