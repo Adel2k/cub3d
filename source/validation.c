@@ -81,6 +81,7 @@ void	parsing_map(char *line, t_cub3d *cub)
 			&& line[i] != 'W' && line[i] != 'E' && !is_space(line[i]))
 			error("The map should only contain 0 and 1");
 	}
+
 	if (cub->map == NULL && check_walls(cub, line, 0))
 		add_node(&line, &cub->map);
 	else if (cub->map && check_walls(cub, line, 1))
@@ -117,8 +118,16 @@ void	reading_map(t_cub3d *cub, int fd)
 
 void	parsing(t_cub3d *cub, int fd)
 {
+	// t_map *current = cub->map;
+
+	// while (current != NULL)
+	// {
+	// 	printf("%s\n", cur)
+	// 	current = current -> next;
+	// }
 	if (fd > 0)
 	{
+		init_cub(cub);
 		reading_map(cub, fd);
 		if (cub->map != NULL)
 		{

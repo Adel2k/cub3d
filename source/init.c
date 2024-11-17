@@ -30,13 +30,6 @@ void	init_cub(t_cub3d *cub)
 	cub->map->prev = NULL;
 	cub->map->line = NULL;
 	cub->player.flag = false;
-	// cub->player = malloc(sizeof(t_player));
-	// if (!cub->player)
-	// 	error("allocation failed.");
-	
-	// if (!cub->player)
-		// 	error("allocation failed.");
-	cub->map = NULL;
 	cub->first_last_line = false;
 	cub->texture = malloc(sizeof(t_texture));
 	if (!cub->texture)

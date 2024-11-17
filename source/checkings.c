@@ -54,7 +54,7 @@ int	check_filename(char *filename)
 	cub = malloc(sizeof(t_cub3d));
 	if (!cub)
 		error("allocation failed");
-	init_cub(cub);
+	// init_cub(cub);
 	len = ft_strlen(filename) - 1;
 	if (filename == NULL)
 		return (1);
@@ -81,7 +81,9 @@ int	check_filename(char *filename)
 			printf("%s-------------%d\n", "WE", cub->F_color);
 			while (current != NULL)
 			{
-				printf(">>>>>>>>>>>>%s", cub->map->line);
+				printf("da\n");
+				printf(">>>>>>>>>>>>%s", current->line);
+				// printf("next->>>>> %d", current->next->len);
 				current = current->next;
 			}
 			printf("\n%d\n", cub->height);
@@ -115,6 +117,10 @@ int	find_player(t_cub3d *cub, int i)
 
 int	set_player_dir(t_cub3d *cub, int i)
 {
+	if (cub->map == NULL)
+		exit(1);
+	printf("%s\n", cub->map->line);
+
 	if (cub->map->line[i] == 'N')
 	{
 		cub->player.dir_x = -1;
