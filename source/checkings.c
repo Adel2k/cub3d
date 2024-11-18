@@ -72,8 +72,8 @@ int	check_filename(char *filename)
 		count++;
 		cub->map = cub->map->next;
 	}
-	// cub->maze = malloc(sizeof(char *) * (count + 1));
-	// get_maze(cub);
+	cub->maze = malloc(sizeof(char *) * (count + 1));
+	get_maze(cub);
 			t_map	*current = cub->map;
 			printf("%s-------------%s\n", "WE", cub->texture->west);
 			printf("%s-------------%s\n", "SO", cub->texture->south);
