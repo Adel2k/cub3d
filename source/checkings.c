@@ -31,6 +31,8 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 			{
 				if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'))
 				{
+					if (!cub->map)
+						exit(1) ;
 					if (cub->player.flag == false && !find_player(cub, i))
 						return (1);
 					else 
@@ -80,7 +82,10 @@ int	check_filename(char *filename)
 			printf("%s-------------%d\n", "c", cub->C_color);
 			printf("%s-------------%d\n", "WE", cub->F_color);
 			while (current != NULL)
+			{
+				printf(">>>>>>>>>>>>>>>>%s\n", current->line);
 				current = current->next;
+			}
 			printf("\n%d\n", cub->height);
 			// start_game(*cub);
 			
@@ -112,10 +117,8 @@ int	find_player(t_cub3d *cub, int i)
 
 int	set_player_dir(t_cub3d *cub, int i)
 {
-	if (cub->map == NULL)
-		exit(1);
-	printf("%s\n", cub->map->line);
-
+	if (!cub->map->line)
+		return 0;
 	if (cub->map->line[i] == 'N')
 	{
 		cub->player.dir_x = -1;

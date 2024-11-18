@@ -26,7 +26,6 @@ void add_node(char *line, t_map **stack, int index)
 	t_map *new_node;
 	t_map *tmp;
 
-	printf("this is -> %p\n", &(*stack));
 	new_node = ft_lstnew(ft_strlen(line), line, index - 6);
 	if (!new_node)
 	{

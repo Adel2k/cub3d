@@ -82,7 +82,7 @@ void	parsing_map(char *line, t_cub3d *cub, int index)
 			error("The map should only contain 0 and 1");
 	}
 	if (cub->map == NULL && check_walls(cub, line, 0))
-		add_node(&line, &cub->map);
+		add_node(line, &cub->map, index);
 	else if (cub->map && check_walls(cub, line, 1))
 		add_node(line, &cub->map, index);
 	else
