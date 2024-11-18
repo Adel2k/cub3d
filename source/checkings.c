@@ -19,6 +19,7 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 
 	i = -1;
 	len = ft_strlen(line);
+	printf("%s\n", line);
 	while (j == 0 && line[++i])
 	{
 		if (line[i] != '1' && !is_space(line[i]))
@@ -87,7 +88,7 @@ int	check_filename(char *filename)
 				current = current->next;
 			}
 			printf("\n%d\n", cub->height);
-			// start_game(*cub);
+			start_game(*cub);
 			
 			return 0;
 		}

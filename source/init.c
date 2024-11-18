@@ -22,13 +22,13 @@ void	init_cub(t_cub3d *cub)
 	cub->mlx.height = 720;
 	cub->maze = NULL;
 	cub->wall = NULL;
+	// cub->map = malloc(sizeof(t_map));
 	cub->map = NULL;
-	cub->map = malloc(sizeof(t_map));
 	// if (!cub->map)
 	// 	free_and_error(cub->map, 1, "There isn't map");
-	cub->map->next = NULL;
-	cub->map->prev = NULL;
-	cub->map->line = NULL;
+	// cub->map->next = NULL;
+	// cub->map->prev = NULL;
+	// cub->map->line = NULL;
 	cub->player.flag = false;
 	cub->first_last_line = false;
 	cub->texture = malloc(sizeof(t_texture));

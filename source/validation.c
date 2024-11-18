@@ -122,13 +122,6 @@ void	reading_map(t_cub3d *cub, int fd)
 
 void	parsing(t_cub3d *cub, int fd)
 {
-	// t_map *current = cub->map;
-
-	// while (current != NULL)
-	// {
-	// 	printf("%s\n", cur)
-	// 	current = current -> next;
-	// }
 	if (fd > 0)
 	{
 		init_cub(cub);

@@ -66,27 +66,40 @@ int	ft_strcmp(char *s1, char *s2)
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
+void putchar(char *c)
+{
+	int i = 0;
+	while ()
+	{
+		write(1, &c, 1);
+	}
+}
 char	*trim(char *line)
 {
 	int		start;
 	int		end;
 	char	*new;
+	char	*tmp;
 	int		i;
 
 	if (!line)
 		return (NULL);
+	printf("-----%d\n",  ft_strlen(line));
 	start = 0;
 	end = ft_strlen(line);
-	while (is_space(line[start]))
+	while (is_space(line[start]) || line[start] == '\n')
 		start++;
-	while (is_space(line[end]))
+	while (is_space(line[end]) || line[end] == '\n')
 		end--;
 	new = malloc(end - start + 1);
 	if (!new)
 		return (NULL);
 	i = 0;
+	tmp = new;
 	while (start < end)
 		new[i++] = line[start++];
 	new[i] = 0;
-	return (new);
+	
+	printf("----%s-----------\n", tmp);
+	return (tmp);
 }
