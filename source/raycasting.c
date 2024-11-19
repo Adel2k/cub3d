@@ -41,11 +41,15 @@ void	raycasting(t_cub3d *cub)
 	anim(cub);
 	while (++w <= cub->mlx.width)
 	{
+
 		ray_pos(cub, w);
 		step_dir(cub);
 		cub->ray.hit = 0;
 		dda_algorithm(cub);
+	// printf(">>2>>>> %d\n", w);
 		draw_texture(cub, w, calc_texture_x(cub));
+	// printf(">>>>>> %d\n", calc_texture_x(cub));
+
 	}
 	anim(cub);
 	if (cub->hiding_map == 1)

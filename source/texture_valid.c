@@ -31,6 +31,34 @@ void	open_close_door(t_cub3d *cub)
 		cub->maze[x][y] = 'O';
 	else if (cub->maze[x][y] == 'O')
 		cub->maze[x][y] = 'D';
+	
+}
+
+
+void	got_player_pos(t_cub3d *cub)
+{
+	int		j;
+	t_map	*map;
+
+	map = cub->map;
+	while (map)
+	{
+		j = 0;
+		while (map->line[j])
+		{
+			if (map->line[j] == 'N' || map->line[j] == 'S'
+				|| map->line[j] == 'E' || map->line[j] == 'W')
+			{
+				cub->player.pos_y = j + 0.5;
+				cub->player.pos_x = map->index + 0.5;
+				find_player(cub, map->line[j]);
+				map->line[j] = '0';
+				return ;
+			}
+			j++;
+		}
+		map = map->next;
+	}
 }
 
 void	create_image(t_cub3d *cub)

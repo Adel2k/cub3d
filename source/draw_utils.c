@@ -57,11 +57,12 @@ void	draw_texture(t_cub3d *cub, int x, int tex_x)
 {
 	t_draw			tex;
 	int				y;
+	// printf(">>>>>> %d\n", tex_x);
 
 	if (cub->ray.perp_wall_dist < 0.000001)
 		cub->ray.perp_wall_dist = 0.000001;
+	// printf(">>>>>> %d\n", tex.tex_y);
 	calc_draw_ends(cub, &tex);
-	printf(">>>>>> %d\n", tex.tex_y);
 	y = tex.draw_start - 1;
 	while (++y < tex.draw_end)
 	{
@@ -70,4 +71,5 @@ void	draw_texture(t_cub3d *cub, int x, int tex_x)
 		my_mlx_pixel_put(&cub->img, x, y,
 			my_mlx_color_taker(choose_texture(cub), tex_x, tex.tex_y));
 	}
+
 }

@@ -14,6 +14,7 @@
 
 void	ray_pos(t_cub3d *cub, int w)
 {
+	printf("---pos---- %f\n", cub->player.pos_x);
 	cub->ray.camera_x = 2.0 * w / (double)cub->mlx.width - 1.0;
 	cub->ray.ray_x = cub->player.dir_x
 		+ cub->player.plane_x * cub->ray.camera_x;
@@ -29,6 +30,7 @@ void	ray_pos(t_cub3d *cub, int w)
 		cub->ray.deltadist_y = 1e30;
 	else
 		cub->ray.deltadist_y = fabs(1 / cub->ray.ray_y);
+	
 }
 
 void	step_dir(t_cub3d *cub)
@@ -57,11 +59,13 @@ void	step_dir(t_cub3d *cub)
 		cub->ray.sdist_y = (cub->player.map_y + 1.0 - cub->player.pos_y)
 			* cub->ray.deltadist_y;
 	}
+	printf("---pos---- %f\n", cub->player.pos_x);
+
 }
 
 void	calc_draw_ends(t_cub3d *cub, t_draw *tex)
 {
-	printf(">>>>>> %d\n", tex->tex_y);
+	// printf(">>>>>> %d\n", tex->tex_y);
 	// printf(">>>>>> %p\n", tex);
 
 	tex->line_height = (int)(cub->mlx.height / cub->ray.perp_wall_dist);
@@ -82,6 +86,9 @@ int	calc_texture_x(t_cub3d *cub)
 	int		tex_x;
 	double	wall_x;
 
+	// printf("---pos---- %f\n", cub->player.pos_x);
+	// printf("----perp--- %f\n", cub->ray.perp_wall_dist);
+	// printf("---ray---- %f\n", cub->ray.ray_x);
 	wall_x = cub->player.pos_x + cub->ray.perp_wall_dist * cub->ray.ray_x;
 	if (cub->ray.side == 0)
 		wall_x = cub->player.pos_y + cub->ray.perp_wall_dist * cub->ray.ray_y;

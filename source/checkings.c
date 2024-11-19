@@ -47,6 +47,31 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 	return (1);
 }
 
+void	check_door(t_cub3d cub)
+{
+	int		j;
+	t_map	*map;
+
+	map = cub.map;
+	map = map->next;
+	while (map->next)
+	{
+		j = 1;
+		if (j < map->len - 1)
+		{
+			while (map->line[j + 1])
+			{
+				if (map->line[j] == 'D'
+					&& !(map->line[j - 1] == '1' && map->line[j + 1] == '1')
+					&& !(map->prev->line[j] == '1' && map->next->line[j] == '1'))
+					ft_free_cub(&cub, 1, "Door in wrong place");
+				j++;
+			}
+		}
+		map = map->next;
+	}
+}
+
 int	check_filename(char *filename)
 {
 	int		len;
@@ -74,19 +99,21 @@ int	check_filename(char *filename)
 	}
 	cub->maze = malloc(sizeof(char *) * (count + 1));
 	get_maze(cub);
-			t_map	*current = cub->map;
-			printf("%s-------------%s\n", "WE", cub->texture->west);
-			printf("%s-------------%s\n", "SO", cub->texture->south);
-			printf("%s-------------%s\n", "EA", cub->texture->east);
-			printf("%s-------------%s\n", "no", cub->texture->north);
-			printf("%s-------------%d\n", "c", cub->C_color);
-			printf("%s-------------%d\n", "WE", cub->F_color);
-			while (current != NULL)
-			{
-				printf(">>>>>>>>>>>>>>>>%s\n", current->line);
-				current = current->next;
-			}
-			// printf("\n%d\n", cub->height);
+	check_door(*cub);
+	got_player_pos(cub);
+			// t_map	*current = cub->map;
+			// printf("%s-------------%s\n", "WE", cub->texture->west);
+			// printf("%s-------------%s\n", "SO", cub->texture->south);
+			// printf("%s-------------%s\n", "EA", cub->texture->east);
+			// printf("%s-------------%s\n", "no", cub->texture->north);
+			// printf("%s-------------%d\n", "c", cub->C_color);
+			// printf("%s-------------%d\n", "WE", cub->F_color);
+			// while (current != NULL)
+			// {
+			// 	printf(">>>>>>>>>>>>>>>>%s\n", current->line);
+			// 	current = current->next;
+			// }
+			// // printf("\n%d\n", cub->height);
 			start_game(*cub);
 			
 			return 0;
@@ -117,8 +144,8 @@ int	find_player(t_cub3d *cub, int i)
 
 int	set_player_dir(t_cub3d *cub, int i)
 {
-	if (!cub->map->line)
-		return 0;
+	if (!cub->map->line[i])
+		exit(0);
 	if (cub->map->line[i] == 'N')
 	{
 		cub->player.dir_x = -1;

@@ -41,10 +41,10 @@ void	destroy_img(t_cub3d *cub)
 		mlx_destroy_image(cub->mlx.ptr, cub->wall[3].img);
 	else if (cub->img.img)
 		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
-	// else if (cub->cdoor.img)
-	// 	mlx_destroy_image(cub->mlx.ptr, cub->cdoor.img);
-	// else if (cub->odoor.img)
-	// 	mlx_destroy_image(cub->mlx.ptr, cub->odoor.img);
+	else if (cub->cdoor.img)
+		mlx_destroy_image(cub->mlx.ptr, cub->cdoor.img);
+	else if (cub->odoor.img)
+		mlx_destroy_image(cub->mlx.ptr, cub->odoor.img);
 	free(cub->wall);
 }
 

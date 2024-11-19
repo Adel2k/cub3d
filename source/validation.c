@@ -76,7 +76,7 @@ void	parsing_map(char *line, t_cub3d *cub, int index)
 	i = 0;
 	while ((line[++i]))
 	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != '\0' \
+		if (line[i] != 'D' && line[i] != '1' && line[i] != '0' && line[i] != '\0' \
 			&& line[i] != '\n' && line[i] != 'N' && line[i] != 'S' \
 			&& line[i] != 'W' && line[i] != 'E' && !is_space(line[i]))
 			error("The map should only contain 0 and 1");
