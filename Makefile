@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Imlx -Iinclude -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Imlx -Iinclude #-g3 -fsanitize=address
 # MLXFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit	
 MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
 

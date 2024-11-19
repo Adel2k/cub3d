@@ -61,6 +61,7 @@ void	draw_texture(t_cub3d *cub, int x, int tex_x)
 	if (cub->ray.perp_wall_dist < 0.000001)
 		cub->ray.perp_wall_dist = 0.000001;
 	calc_draw_ends(cub, &tex);
+	printf(">>>>>> %d\n", tex.tex_y);
 	y = tex.draw_start - 1;
 	while (++y < tex.draw_end)
 	{

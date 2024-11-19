@@ -61,6 +61,9 @@ void	step_dir(t_cub3d *cub)
 
 void	calc_draw_ends(t_cub3d *cub, t_draw *tex)
 {
+	printf(">>>>>> %d\n", tex->tex_y);
+	// printf(">>>>>> %p\n", tex);
+
 	tex->line_height = (int)(cub->mlx.height / cub->ray.perp_wall_dist);
 	tex->draw_start = -tex->line_height / 2 + cub->mlx.height / 2;
 	if (tex->draw_start < 0)
@@ -71,6 +74,7 @@ void	calc_draw_ends(t_cub3d *cub, t_draw *tex)
 	tex->step = 1.0 * 64 / tex->line_height;
 	tex->tex_pos = (tex->draw_start - cub->mlx.height / 2 + tex->line_height / 2)
 		* tex->step;
+	// printf(">>>>>> %d\n", tex->tex_x);
 }
 
 int	calc_texture_x(t_cub3d *cub)

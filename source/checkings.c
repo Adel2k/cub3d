@@ -27,22 +27,22 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 	i = 0;
 	while (j == 1 && line[++i])
 	{
-			if (line[0] == '1' && (line[len - 2] == '1' || is_space(line[len -2])))
+		if (line[0] == '1' && (line[len - 2] == '1' || is_space(line[len -2])))
+		{
+			if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'))
 			{
-				if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'))
-				{
-					if (!cub->map)
-						exit(1) ;
-					if (cub->player.flag == false && !find_player(cub, i))
-						return (1);
-					else 
-						error("just one player you can have");
-				}
-				else
-					continue;
+				if (!cub->map)
+					exit(1) ;
+				if (cub->player.flag == false && !find_player(cub, i))
+					return (1);
+				else 
+					error("just one player you can have");
 			}
 			else
-				error("the map should be srounded by walls");
+				continue;
+		}
+		else
+			error("the map should be srounded by walls");
 	}
 	return (1);
 }
@@ -86,7 +86,7 @@ int	check_filename(char *filename)
 				printf(">>>>>>>>>>>>>>>>%s\n", current->line);
 				current = current->next;
 			}
-			printf("\n%d\n", cub->height);
+			// printf("\n%d\n", cub->height);
 			start_game(*cub);
 			
 			return 0;
