@@ -19,7 +19,6 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 
 	i = -1;
 	len = ft_strlen(line);
-	printf("%s\n", line);
 	while (j == 0 && line[++i])
 	{
 		if (line[i] != '1' && !is_space(line[i]))
@@ -28,7 +27,7 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 	i = 0;
 	while (j == 1 && line[++i])
 	{
-			if (line[0] == '1' && line[len - 2] == '1')
+			if (line[0] == '1' && (line[len - 2] == '1' || is_space(line[len -2])))
 			{
 				if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'))
 				{
