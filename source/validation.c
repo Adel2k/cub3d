@@ -102,6 +102,8 @@ void	reading_map(t_cub3d *cub, int fd)
 		if (!line)
 			break ;
 		line = trim(line);
+		if (!line)
+			break ;
 		if (*line != 0)
 		{
 			if (cub->texture_flag == 6)

@@ -84,23 +84,23 @@ char	*trim(char *line)
 
 	if (!line)
 		return (NULL);
-	// printf("-----%d\n",  ft_strlen(line));
 	start = 0;
-	end = ft_strlen(line);
-	while (is_space(line[start]) || line[start] == '\n')
+	end = ft_strlen(line) - 1;
+	while (line[start] && is_space(line[start]))
 		start++;
-	while (is_space(line[end]) || line[end] == '\n')
+	while (line[end] && is_space(line[end]))
+	{
 		end--;
-	new = malloc(end - start + 1);
+		if (end < start)
+			return (strdup(""));
+	}
+	new = malloc(end - start + 2);
 	if (!new)
 		return (NULL);
 	i = 0;
 	tmp = new;
-	while (start < end)
+	while (start <= end)
 		new[i++] = line[start++];
-	new[i] = 0;
-	// ft_putchar(tmp);
-	// ft_putchar("----------");
-	// printf("----%s-----------\n", tmp);
+	new[i] = '\0';
 	return (tmp);
 }

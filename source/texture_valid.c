@@ -41,11 +41,15 @@ void	got_player_pos(t_cub3d *cub)
 	t_map	*map;
 
 	map = cub->map;
+	if (!map->line)
+		return ;
 	while (map)
 	{
 		j = 0;
+				printf("%d\n >>>. \n", j);
 		while (map->line[j])
 		{
+			// printf("this ---> %d\n", ft_strlen(map->line));
 			if (map->line[j] == 'N' || map->line[j] == 'S'
 				|| map->line[j] == 'E' || map->line[j] == 'W')
 			{

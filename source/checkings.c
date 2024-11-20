@@ -27,7 +27,7 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 	i = 0;
 	while (j == 1 && line[++i])
 	{
-		if (line[0] == '1' && (line[len - 2] == '1' || is_space(line[len -2])))
+		if (line[0] == '1' && (line[len - 1] == '1'))
 		{
 			if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'))
 			{
@@ -42,7 +42,10 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 				continue;
 		}
 		else
+		{
+			printf("%d\n", line[i]);
 			error("the map should be srounded by walls");
+		}
 	}
 	return (1);
 }
@@ -78,6 +81,8 @@ int	check_filename(char *filename)
 	int		fd;
 	t_cub3d	*cub;
 
+	if (!filename)
+		return (1);
 	cub = malloc(sizeof(t_cub3d));
 	if (!cub)
 		error("allocation failed");
@@ -97,10 +102,14 @@ int	check_filename(char *filename)
 		count++;
 		cub->map = cub->map->next;
 	}
-	cub->maze = malloc(sizeof(char *) * (count + 1));
-	get_maze(cub);
-	check_door(*cub);
-	got_player_pos(cub);
+		printf("aaaa\n");
+	// cub->maze = malloc(sizeof(char *) * (count + 1));
+	// get_maze(cub);
+	// // check_door(*cub);
+
+	// got_player_pos(cub);
+	// 	printf("aaaa\n");
+	
 			// t_map	*current = cub->map;
 			// printf("%s-------------%s\n", "WE", cub->texture->west);
 			// printf("%s-------------%s\n", "SO", cub->texture->south);
@@ -114,7 +123,7 @@ int	check_filename(char *filename)
 			// 	current = current->next;
 			// }
 			// // printf("\n%d\n", cub->height);
-			start_game(*cub);
+			// start_game(*cub);
 			
 			return 0;
 		}
@@ -137,6 +146,9 @@ int	find_player(t_cub3d *cub, int i)
 	cub->player.dir_y = 0;
 	cub->player.plane_x = 0;
 	cub->player.plane_y = 0;
+	// printf("this -----> %s\n", cub->map->line);
+	// printf("this ---> %d\n", i);
+
 	if (set_player_dir(cub, i) == 1)
 		return (1);
 	return (0);
@@ -144,6 +156,8 @@ int	find_player(t_cub3d *cub, int i)
 
 int	set_player_dir(t_cub3d *cub, int i)
 {
+	// printf("this ---> %d\n", i);
+
 	if (!cub->map->line[i])
 		exit(0);
 	if (cub->map->line[i] == 'N')
