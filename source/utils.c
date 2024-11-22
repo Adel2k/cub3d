@@ -94,6 +94,7 @@ char	*trim(char *line)
 		if (end < start)
 			return (strdup(""));
 	}
+	printf("vaxxxx\n");
 	new = malloc(end - start + 2);
 	if (!new)
 		return (NULL);
@@ -102,5 +103,7 @@ char	*trim(char *line)
 	while (start <= end)
 		new[i++] = line[start++];
 	new[i] = '\0';
+	printf("tmp->%s\n", tmp);
+
 	return (tmp);
 }

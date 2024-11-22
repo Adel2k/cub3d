@@ -52,41 +52,41 @@ void	move_right_left(t_cub3d *cub, int key, double move)
 	double	prev_x;
 	double	prev_y;
 
-	prev_x = cub->player.dir_x;
-	prev_y = cub->player.dir_y;
+	prev_x = cub->player->dir_x;
+	prev_y = cub->player->dir_y;
 	get_dir(cub);
 	if (key == D)
 		move_w(cub, move);
 	else if (key == A)
 		move_s(cub, move);
-	cub->player.dir_x = prev_x;
-	cub->player.dir_y = prev_y;
+	cub->player->dir_x = prev_x;
+	cub->player->dir_y = prev_y;
 }
 
 void	move_s(t_cub3d *cub, double move)
 {
-	if (cub->maze[(int)(cub->player.pos_x - cub->player.dir_x * move)]
-		[(int)(cub->player.pos_y)] == '0'
-		|| cub->maze[(int)(cub->player.pos_x
-		- cub->player.dir_x * move)][(int)(cub->player.pos_y)] == 'O')
-		cub->player.pos_x -= cub->player.dir_x * move;
-	if (cub->maze[(int)(cub->player.pos_x)][(int)(cub->player.pos_y
-		- cub->player.dir_y * move)] == '0'
-		|| cub->maze[(int)(cub->player.pos_x)][(int)(cub->player.pos_y
-		- cub->player.dir_y * move)] == 'O')
-		cub->player.pos_y -= cub->player.dir_y * move;
+	if (cub->maze[(int)(cub->player->pos_x - cub->player->dir_x * move)]
+		[(int)(cub->player->pos_y)] == '0'
+		|| cub->maze[(int)(cub->player->pos_x
+		- cub->player->dir_x * move)][(int)(cub->player->pos_y)] == 'O')
+		cub->player->pos_x -= cub->player->dir_x * move;
+	if (cub->maze[(int)(cub->player->pos_x)][(int)(cub->player->pos_y
+		- cub->player->dir_y * move)] == '0'
+		|| cub->maze[(int)(cub->player->pos_x)][(int)(cub->player->pos_y
+		- cub->player->dir_y * move)] == 'O')
+		cub->player->pos_y -= cub->player->dir_y * move;
 }
 
 void	move_w(t_cub3d *cub, double move)
 {
-	if (cub->maze[(int)(cub->player.pos_x + cub->player.dir_x * move)]
-		[(int)(cub->player.pos_y)] == '0'
-		|| cub->maze[(int)(cub->player.pos_x
-		+ cub->player.dir_x * move)][(int)(cub->player.pos_y)] == 'O')
-		cub->player.pos_x += cub->player.dir_x * move;
-	if (cub->maze[(int)(cub->player.pos_x)][(int)(cub->player.pos_y
-		+ cub->player.dir_y * move)] == '0'
-		|| cub->maze[(int)(cub->player.pos_x)][(int)(cub->player.pos_y
-		+ cub->player.dir_y * move)] == 'O')
-		cub->player.pos_y += cub->player.dir_y * move;
+	if (cub->maze[(int)(cub->player->pos_x + cub->player->dir_x * move)]
+		[(int)(cub->player->pos_y)] == '0'
+		|| cub->maze[(int)(cub->player->pos_x
+		+ cub->player->dir_x * move)][(int)(cub->player->pos_y)] == 'O')
+		cub->player->pos_x += cub->player->dir_x * move;
+	if (cub->maze[(int)(cub->player->pos_x)][(int)(cub->player->pos_y
+		+ cub->player->dir_y * move)] == '0'
+		|| cub->maze[(int)(cub->player->pos_x)][(int)(cub->player->pos_y
+		+ cub->player->dir_y * move)] == 'O')
+		cub->player->pos_y += cub->player->dir_y * move;
 }
