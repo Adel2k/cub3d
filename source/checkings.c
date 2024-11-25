@@ -27,14 +27,19 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 	i = 0;
 	while (j == 1 && line[++i])
 	{
-		if (line[0] == '1' && (line[len - 2] == '1' || is_space(line[len -2])))
+		if (line[0] == '1' && (line[len - 1] == '1'))
 		{
 			if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'))
 			{
 				if (!cub->map)
 					exit(1) ;
-				if (cub->player.flag == false && !find_player(cub, i))
+		printf("11111this ---> %s------\n", line);
+				
+				if (cub->player->flag == false && !find_player(cub, i))
+				{
+					printf("da");
 					return (1);
+				}
 				else 
 					error("just one player you can have");
 			}
@@ -42,7 +47,10 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 				continue;
 		}
 		else
+		{
+			printf("%c\n", line[i]);
 			error("the map should be srounded by walls");
+		}
 	}
 	return (1);
 }
@@ -78,29 +86,33 @@ int	check_filename(char *filename)
 	int		fd;
 	t_cub3d	*cub;
 
+	if (!filename)
+		return (1);
 	cub = malloc(sizeof(t_cub3d));
 	if (!cub)
 		error("allocation failed");
 	// init_cub(cub);
 	len = ft_strlen(filename) - 1;
-	if (filename == NULL)
-		return (1);
-	if (ft_strlen(filename) > 4)
+	if (len > 4)
 	{
 		if (ft_strcmp(ft_substr(filename, len - 3, 4), ".cub") == 0)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
 			int	count = 1;
-	while (cub->map->next)
-	{
-		count++;
-		cub->map = cub->map->next;
-	}
-	cub->maze = malloc(sizeof(char *) * (count + 1));
-	get_maze(cub);
-	check_door(*cub);
-	got_player_pos(cub);
+			t_map *a = cub->map;
+			while (cub->map->next)
+			{
+				count++;
+				cub->map = cub->map->next;
+			}
+			cub->map = a;
+		cub->maze = malloc(sizeof(char *) * (count + 1));
+		get_maze(cub);
+	// check_door(*cub);
+		get_player_pos(cub);
+	// 	printf("aaaa\n");
+	
 			// t_map	*current = cub->map;
 			// printf("%s-------------%s\n", "WE", cub->texture->west);
 			// printf("%s-------------%s\n", "SO", cub->texture->south);
@@ -114,7 +126,7 @@ int	check_filename(char *filename)
 			// 	current = current->next;
 			// }
 			// // printf("\n%d\n", cub->height);
-			start_game(*cub);
+			// start_game(*cub);
 			
 			return 0;
 		}
@@ -132,11 +144,13 @@ int	is_space(char c)
 
 int	find_player(t_cub3d *cub, int i)
 {
-	cub->player.flag = true;
-	cub->player.dir_x = 0;
-	cub->player.dir_y = 0;
-	cub->player.plane_x = 0;
-	cub->player.plane_y = 0;
+	cub->player->flag = true;
+	cub->player->dir_x = 0;
+	cub->player->dir_y = 0;
+	cub->player->plane_x = 0;
+	cub->player->plane_y = 0;
+			// printf("----- > %s\n", cub->map->line);
+
 	if (set_player_dir(cub, i) == 1)
 		return (1);
 	return (0);
@@ -144,30 +158,35 @@ int	find_player(t_cub3d *cub, int i)
 
 int	set_player_dir(t_cub3d *cub, int i)
 {
-	if (!cub->map->line[i])
+			printf("----- >%d  \n", i);
+
+			// printf("----- >%d  %d\n", i , ft_strlen(cub->map->line));
+
+	if (!cub->map->line)
 		exit(0);
-	if (cub->map->line[i] == 'N')
+	if (cub->map->line[10] == 'N')
 	{
-		cub->player.dir_x = -1;
-		cub->player.plane_y = 0.66;
+		printf("stex->\n");
+		cub->player->dir_x = -1;
+		cub->player->plane_y = 0.66;
 		return (1);
 	}
 	if (cub->map->line[i] == 'W')
 	{
-		cub->player.dir_x = -1;
-		cub->player.plane_y = -0.66;
+		cub->player->dir_x = -1;
+		cub->player->plane_y = -0.66;
 		return (1);
 	}
 	if (cub->map->line[i] == 'E')
 	{
-		cub->player.dir_y = 1;
-		cub->player.plane_x = 0.66;
+		cub->player->dir_y = 1;
+		cub->player->plane_x = 0.66;
 		return (1);
 	}
 	if (cub->map->line[i] == 'S')
 	{
-		cub->player.dir_y = 1;
-		cub->player.plane_x = -0.66;
+		cub->player->dir_y = 1;
+		cub->player->plane_x = -0.66;
 		return (1);
 	}
 	return (0);

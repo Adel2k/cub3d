@@ -145,7 +145,7 @@ typedef struct s_cub3d
 	t_mlx			mlx;
 	t_texture		*texture;
 	t_map			*map;
-	t_player		player;
+	t_player		*player;
 }	t_cub3d;
 
 ///////////////utils//////////////////////////////////////
@@ -249,6 +249,6 @@ void			open_close_door(t_cub3d *cub);
 void			create_image(t_cub3d *cub);
 void			get_door(t_img *door, t_cub3d *cub, char *path);
 
-void	got_player_pos(t_cub3d *cub);
+void	get_player_pos(t_cub3d *cub);
 
 #endif

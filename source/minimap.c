@@ -53,7 +53,7 @@ int	draw_minimap(t_cub3d *cub)
 		}
 		y++;
 	}
-	draw_square(cub, (int)(cub->player.pos_x * TILE_SIZE),
-		(int)(cub->player.pos_y * TILE_SIZE), 0x0000FF);
+	draw_square(cub, (int)(cub->player->pos_x * TILE_SIZE),
+		(int)(cub->player->pos_y * TILE_SIZE), 0x0000FF);
 	return (0);
 }

@@ -14,14 +14,14 @@
 
 void	ray_pos(t_cub3d *cub, int w)
 {
-	printf("---pos---- %f\n", cub->player.pos_x);
+	printf("---pos---- %f\n", cub->player->pos_x);
 	cub->ray.camera_x = 2.0 * w / (double)cub->mlx.width - 1.0;
-	cub->ray.ray_x = cub->player.dir_x
-		+ cub->player.plane_x * cub->ray.camera_x;
-	cub->ray.ray_y = cub->player.dir_y
-		+ cub->player.plane_y * cub->ray.camera_x;
-	cub->player.map_x = (int)cub->player.pos_x;
-	cub->player.map_y = (int)cub->player.pos_y;
+	cub->ray.ray_x = cub->player->dir_x
+		+ cub->player->plane_x * cub->ray.camera_x;
+	cub->ray.ray_y = cub->player->dir_y
+		+ cub->player->plane_y * cub->ray.camera_x;
+	cub->player->map_x = (int)cub->player->pos_x;
+	cub->player->map_y = (int)cub->player->pos_y;
 	if (cub->ray.ray_x == 0)
 		cub->ray.deltadist_x = 1e30;
 	else
@@ -37,29 +37,29 @@ void	step_dir(t_cub3d *cub)
 {
 	if (cub->ray.ray_x < 0)
 	{
-		cub->player.step_x = -1;
-		cub->ray.sdist_x = (cub->player.pos_x - cub->player.map_x)
+		cub->player->step_x = -1;
+		cub->ray.sdist_x = (cub->player->pos_x - cub->player->map_x)
 			* cub->ray.deltadist_x;
 	}
 	else
 	{
-		cub->player.step_x = 1;
-		cub->ray.sdist_x = (cub->player.map_x + 1.0 - cub->player.pos_x)
+		cub->player->step_x = 1;
+		cub->ray.sdist_x = (cub->player->map_x + 1.0 - cub->player->pos_x)
 			* cub->ray.deltadist_x;
 	}
 	if (cub->ray.ray_y < 0)
 	{
-		cub->player.step_y = -1;
-		cub->ray.sdist_y = (cub->player.pos_y - cub->player.map_y)
+		cub->player->step_y = -1;
+		cub->ray.sdist_y = (cub->player->pos_y - cub->player->map_y)
 			* cub->ray.deltadist_y;
 	}
 	else
 	{
-		cub->player.step_y = 1;
-		cub->ray.sdist_y = (cub->player.map_y + 1.0 - cub->player.pos_y)
+		cub->player->step_y = 1;
+		cub->ray.sdist_y = (cub->player->map_y + 1.0 - cub->player->pos_y)
 			* cub->ray.deltadist_y;
 	}
-	printf("---pos---- %f\n", cub->player.pos_x);
+	printf("---pos---- %f\n", cub->player->pos_x);
 
 }
 
@@ -86,12 +86,12 @@ int	calc_texture_x(t_cub3d *cub)
 	int		tex_x;
 	double	wall_x;
 
-	// printf("---pos---- %f\n", cub->player.pos_x);
+	// printf("---pos---- %f\n", cub->player->pos_x);
 	// printf("----perp--- %f\n", cub->ray.perp_wall_dist);
 	// printf("---ray---- %f\n", cub->ray.ray_x);
-	wall_x = cub->player.pos_x + cub->ray.perp_wall_dist * cub->ray.ray_x;
+	wall_x = cub->player->pos_x + cub->ray.perp_wall_dist * cub->ray.ray_x;
 	if (cub->ray.side == 0)
-		wall_x = cub->player.pos_y + cub->ray.perp_wall_dist * cub->ray.ray_y;
+		wall_x = cub->player->pos_y + cub->ray.perp_wall_dist * cub->ray.ray_y;
 	wall_x -= floor((wall_x));
 	tex_x = (int)(wall_x * (double)(64));
 	if ((cub->ray.side == 0 && cub->ray.ray_x > 0)
@@ -107,20 +107,20 @@ void	dda_algorithm(t_cub3d *cub)
 		if (cub->ray.sdist_x < cub->ray.sdist_y)
 		{
 			cub->ray.sdist_x += cub->ray.deltadist_x;
-			cub->player.map_x += cub->player.step_x;
+			cub->player->map_x += cub->player->step_x;
 			cub->ray.side = 0;
 		}
 		else
 		{
 			cub->ray.sdist_y += cub->ray.deltadist_y;
-			cub->player.map_y += cub->player.step_y;
+			cub->player->map_y += cub->player->step_y;
 			cub->ray.side = 1;
 		}
-		if (cub->maze[cub->player.map_x][cub->player.map_y] == '1')
+		if (cub->maze[cub->player->map_x][cub->player->map_y] == '1')
 			cub->ray.hit = 1;
-		else if (cub->maze[cub->player.map_x][cub->player.map_y] == 'D')
+		else if (cub->maze[cub->player->map_x][cub->player->map_y] == 'D')
 			cub->ray.hit = 2;
-		else if (cub->maze[cub->player.map_x][cub->player.map_y] == 'O')
+		else if (cub->maze[cub->player->map_x][cub->player->map_y] == 'O')
 			cub->ray.hit = 3;
 	}
 	if (cub->ray.side == 0)
