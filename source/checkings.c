@@ -94,7 +94,6 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
-	printf("poinrt %p\n", cub->map->line);
 			int	count = 1;
 			t_map *a = cub->map;
 			while (a)
@@ -122,7 +121,7 @@ int	check_filename(char *filename)
 			// 	current = current->next;
 			// }
 			// // printf("\n%d\n", cub->height);
-			// start_game(*cub);
+			start_game(*cub);
 			
 			return 0;
 		}

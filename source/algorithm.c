@@ -14,7 +14,6 @@
 
 void	ray_pos(t_cub3d *cub, int w)
 {
-	printf("---pos---- %f\n", cub->player.pos_x);
 	cub->ray.camera_x = 2.0 * w / (double)cub->mlx.width - 1.0;
 	cub->ray.ray_x = cub->player.dir_x
 		+ cub->player.plane_x * cub->ray.camera_x;
@@ -59,8 +58,6 @@ void	step_dir(t_cub3d *cub)
 		cub->ray.sdist_y = (cub->player.map_y + 1.0 - cub->player.pos_y)
 			* cub->ray.deltadist_y;
 	}
-	printf("---pos---- %f\n", cub->player.pos_x);
-
 }
 
 void	calc_draw_ends(t_cub3d *cub, t_draw *tex)

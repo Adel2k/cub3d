@@ -53,6 +53,6 @@ void	raycasting(t_cub3d *cub)
 	}
 	anim(cub);
 	if (cub->hiding_map == 1)
-		draw_minimap(cub);
+		// draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 }

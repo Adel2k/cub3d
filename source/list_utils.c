@@ -43,7 +43,6 @@ void add_node(char *line, t_map **stack, int index)
 
 	last->next = new_node; // Add the new node at the end
 	new_node->prev = last; // Set the new node's previous pointer
-	printf("----> %p\n", (*stack)->line);
 }
 
 int	count_nodes(t_map **map)

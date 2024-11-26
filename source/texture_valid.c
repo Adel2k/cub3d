@@ -40,14 +40,11 @@ void	get_player_pos(t_cub3d *cub)
 	int		j;
 	t_map	*map;
 
-	if (!cub && !cub->map)
-		exit(1) ;
-	map = cub->map;
+	map = cub->map->next;
 	if (!map->line)
 		return ;
 	while (map)
 	{
-	printf("%p\n", cub->map->line);
 		j = 0;
 		while (map->line[j])
 		{

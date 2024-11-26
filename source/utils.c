@@ -102,7 +102,7 @@ char	*trim(char *line)
 	while (start <= end)
 		new[i++] = line[start++];
 	new[i] = '\0';
-	printf("tmp->%s\n", tmp);
+	// printf("tmp->%s\n", tmp);
 
 	return (tmp);
 }
