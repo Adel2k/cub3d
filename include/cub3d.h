@@ -145,7 +145,7 @@ typedef struct s_cub3d
 	t_mlx			mlx;
 	t_texture		*texture;
 	t_map			*map;
-	t_player		*player;
+	t_player		player;
 }	t_cub3d;
 
 ///////////////utils//////////////////////////////////////
@@ -183,8 +183,7 @@ void			ft_lstclear(t_map **lst);
 int				check_walls(t_cub3d *cub, char *line, int j);
 int				check_filename(char *filename);
 int				is_space(char c);
-int				find_player(t_cub3d *cub, int i);
-int				set_player_dir(t_cub3d *cub, int i);
+int				set_dir(t_cub3d *cub, char c);
 
 //////////////error&free////////////////////////////////
 void			malloc_check(char *str);

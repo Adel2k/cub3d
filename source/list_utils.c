@@ -20,31 +20,31 @@ t_map	*lstlast(t_map *node)
 		node = node->next;
 	return (node);
 }
-
-void add_node(char *line, t_map **stack, int index)
+void add_node(char *line, t_map **map, int index)
 {
-	t_map *new_node;
-	t_map *tmp;
+    t_map *new_node;
+    t_map *last;
 
-	new_node = ft_lstnew(ft_strlen(line), line, index - 6);
-	if (!new_node)
-	{
-		ft_lstclear(stack);
-		// free_and_error(line, 1, "Malloc error");
-		return;
-	}
-	new_node->next = 0;
-	if (*stack == NULL) // If the list is empty
-		*stack = new_node;
-	else
-	{
-		tmp = *stack;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_node;
-		new_node->prev = tmp;
-	}
+    if (!line || !map || !*map) // Validate input
+        exit(1);
+
+    new_node = ft_lstnew(ft_strlen(line), line, index); // Create a new node
+    if (!new_node)
+    {
+        free_and_error(NULL, 1, "Malloc error");
+        return;
+    }
+
+    // Append to the end of the map
+    last = *map;
+    while (last && last->next)
+        last = last->next;
+
+    last->next = new_node; // Add the new node
+    new_node->prev = last; // Update the previous pointer
+	printf("Added node: %s at index %d\n", (*map)->line, (*map)->index);
 }
+
 
 int	count_nodes(t_map **map)
 {
@@ -62,7 +62,6 @@ int	count_nodes(t_map **map)
 	}
 	return (i);
 }
-
 t_map	*ft_lstnew(int len, char *line, int index)
 {
 	t_map	*res;
@@ -70,17 +69,23 @@ t_map	*ft_lstnew(int len, char *line, int index)
 	res = malloc(sizeof(t_map));
 	if (!res)
 		return (NULL);
-	res->len = len;
-	// res->line = malloc(len + 1);
-	// res->line[len + 1] = 0;
-	res->line = line;
-			// printf("----- > %s\n", line);
 
+	res->len = len;
 	res->index = index;
 	res->prev = NULL;
 	res->next = NULL;
+
+	// Duplicate the line to ensure the node owns its data
+	res->line = ft_strdup(line);
+	if (!res->line)
+	{
+		free(res);
+		return NULL;
+	}
+
 	return (res);
 }
+
 
 void	ft_lstclear(t_map **lst)
 {
@@ -91,8 +96,8 @@ void	ft_lstclear(t_map **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		if ((*lst)->line != NULL)
-			free((*lst)->line);
+		// if ((*lst)->line != NULL)
+		// 	free((*lst)->line);
 		free(*lst);
 		*lst = tmp;
 	}

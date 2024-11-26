@@ -17,16 +17,16 @@ void	open_close_door(t_cub3d *cub)
 	int	x;
 	int	y;
 
-	x = (int)cub->player->pos_x;
-	y = (int)cub->player->pos_y;
-	if (cub->player->dir_x < -0.05)
-		x = (int)cub->player->pos_x - 1;
-	else if (cub->player->dir_x > 0.05)
-		x = (int)cub->player->pos_x + 1;
-	if (cub->player->dir_y < -0.05)
-		y = (int)cub->player->pos_y - 1;
-	else if (cub->player->dir_y > 0.05)
-		y = (int)cub->player->pos_y + 1;
+	x = (int)cub->player.pos_x;
+	y = (int)cub->player.pos_y;
+	if (cub->player.dir_x < -0.05)
+		x = (int)cub->player.pos_x - 1;
+	else if (cub->player.dir_x > 0.05)
+		x = (int)cub->player.pos_x + 1;
+	if (cub->player.dir_y < -0.05)
+		y = (int)cub->player.pos_y - 1;
+	else if (cub->player.dir_y > 0.05)
+		y = (int)cub->player.pos_y + 1;
 	if (cub->maze[x][y] == 'D')
 		cub->maze[x][y] = 'O';
 	else if (cub->maze[x][y] == 'O')
@@ -37,26 +37,26 @@ void	open_close_door(t_cub3d *cub)
 
 void	get_player_pos(t_cub3d *cub)
 {
-		// write(1, "a", 1);
 	int		j;
 	t_map	*map;
 
+	if (!cub && !cub->map)
+		exit(1) ;
 	map = cub->map;
 	if (!map->line)
 		return ;
 	while (map)
 	{
+	printf("%p\n", cub->map->line);
 		j = 0;
-		printf("11111this ---> %d\n", j);
-
 		while (map->line[j])
-		{	
+		{
 			if (map->line[j] == 'N' || map->line[j] == 'S'
 				|| map->line[j] == 'E' || map->line[j] == 'W')
 			{
-				cub->player->pos_y = j + 0.5;
-				cub->player->pos_x = map->index + 0.5;
-				find_player(cub, j);
+				cub->player.pos_y = j + 0.5;
+				cub->player.pos_x = map->index + 0.5;
+				set_dir(cub, map->line[j]);
 				map->line[j] = '0';
 				return ;
 			}

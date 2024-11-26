@@ -33,14 +33,9 @@ int	check_walls(t_cub3d *cub, char *line, int j)
 			{
 				if (!cub->map)
 					exit(1) ;
-		printf("11111this ---> %s------\n", line);
-				
-				if (cub->player->flag == false && !find_player(cub, i))
-				{
-					printf("da");
+				if (cub->player.flag == false && set_dir(cub, line[i]))
 					return (1);
-				}
-				else 
+				else
 					error("just one player you can have");
 			}
 			else
@@ -99,18 +94,19 @@ int	check_filename(char *filename)
 		{
 			fd = open(filename, O_RDONLY);
 			parsing(cub, fd);
+	printf("poinrt %p\n", cub->map->line);
 			int	count = 1;
 			t_map *a = cub->map;
-			while (cub->map->next)
+			while (a)
 			{
 				count++;
-				cub->map = cub->map->next;
+				a = a->next;
 			}
-			cub->map = a;
 		cub->maze = malloc(sizeof(char *) * (count + 1));
-		get_maze(cub);
-	// check_door(*cub);
+		check_door(*cub);
+
 		get_player_pos(cub);
+		get_maze(cub);
 	// 	printf("aaaa\n");
 	
 			// t_map	*current = cub->map;
@@ -142,51 +138,39 @@ int	is_space(char c)
 	return (0);
 }
 
-int	find_player(t_cub3d *cub, int i)
+int	set_dir(t_cub3d *cub, char c)
 {
-	cub->player->flag = true;
-	cub->player->dir_x = 0;
-	cub->player->dir_y = 0;
-	cub->player->plane_x = 0;
-	cub->player->plane_y = 0;
-			// printf("----- > %s\n", cub->map->line);
-
-	if (set_player_dir(cub, i) == 1)
-		return (1);
-	return (0);
-}
-
-int	set_player_dir(t_cub3d *cub, int i)
-{
-			printf("----- >%d  \n", i);
-
-			// printf("----- >%d  %d\n", i , ft_strlen(cub->map->line));
-
-	if (!cub->map->line)
-		exit(0);
-	if (cub->map->line[10] == 'N')
+	cub->player.dir_x = 0;
+	cub->player.dir_y = 0;
+	cub->player.plane_x = 0;
+	cub->player.plane_y = 0;
+	if (c == 'N')
 	{
-		printf("stex->\n");
-		cub->player->dir_x = -1;
-		cub->player->plane_y = 0.66;
+		cub->player.dir_x = -1;
+		cub->player.plane_y = 0.66;
+		cub->player.flag = true;
 		return (1);
 	}
-	if (cub->map->line[i] == 'W')
+	else if (c == 'S')
 	{
-		cub->player->dir_x = -1;
-		cub->player->plane_y = -0.66;
+		cub->player.dir_x = 1;
+		cub->player.plane_y = -0.66;
+		cub->player.flag = true;
 		return (1);
 	}
-	if (cub->map->line[i] == 'E')
+	else if (c == 'E')
 	{
-		cub->player->dir_y = 1;
-		cub->player->plane_x = 0.66;
+		cub->player.dir_y = 1;
+		cub->player.plane_x = 0.66;
+		cub->player.flag = true;
 		return (1);
+
 	}
-	if (cub->map->line[i] == 'S')
+	else if (c == 'W')
 	{
-		cub->player->dir_y = 1;
-		cub->player->plane_x = -0.66;
+		cub->player.dir_y = -1;
+		cub->player.plane_x = -0.66;
+		cub->player.flag = true;
 		return (1);
 	}
 	return (0);

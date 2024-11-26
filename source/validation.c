@@ -76,7 +76,6 @@ void	parsing_map(char *line, t_cub3d *cub, int index)
 	i = 0;
 	while ((line && line[i]))
 	{
-		// printf("line[i] = %c\n", line[i]);
 		if (line[i] != 'D' && line[i] != '1' && line[i] != '0' \
 			&& line[i] != '\n' && line[i] != 'N' && line[i] != 'S' \
 			&& line[i] != 'E' && line[i] != 'W' && !is_space(line[i]))
@@ -84,15 +83,9 @@ void	parsing_map(char *line, t_cub3d *cub, int index)
 		i++;
 	}
 	if (cub->map == NULL && check_walls(cub, line, 0))
-	{
-		printf("nodeica\n");
 		add_node(line, &cub->map, index);
-	}
 	else if (cub->map && check_walls(cub, line, 1))
-	{
-		printf("hres->%s\n", line);
 		add_node(line, &cub->map, index);
-	}
 	else
 		error("Inavlid map, the map should be srounded with walls");
 }
@@ -107,54 +100,28 @@ void	reading_map(t_cub3d *cub, int fd)
 	line = 0;
 	while (1)
 	{
-		// free(line);
-		// line = 0;
 		line = get_next_line(fd);
 		if (!line)
-		{
-			printf("stexic\n");
 			break ;
-		}
 		line = trim(line);
 		if (!line)
-		{
-			printf("satana\n");
 			break ;
-		}
 		if (*line != 0)
 		{
-			printf("aaaaa->%s\n", line);
 			if (cub->texture_flag == 6)
 			{
-				printf("ssss\n");
 				parsing_map(line, cub, index);
 				index++;
 			}
-				printf("ssssbg\n");
-
 			args = ft_split(line, ' ');
 			if (cub->texture_flag < 4 && !validating_texture(cub, args))
-			{
-	printf("vaxxxx\n");
-				
 				continue ;
-			}
 			args = ft_split(line, ',');
 			if (cub->texture_flag < 6 && cub->texture_flag >= 4 \
 				&& !validating_color(cub, args))
-				{
-	printf("vaxxxx\n");
-
 					continue ;
-				}
 		} 
 	}
-	printf("meka ce\n");
-		// int i = 0;
-		// while (cub->map->line[i])
-		// {
-		// 	printf("lineeee->%s\n", cub->map->line[i++]);
-		// }
 }
 
 void	parsing(t_cub3d *cub, int fd)
@@ -167,7 +134,7 @@ void	parsing(t_cub3d *cub, int fd)
 		{
 			if (!check_walls(cub, (lstlast(cub->map))->line, 0))
 				error("Inavlid map, the map should be srounded with walls");
-			if (cub->player->flag == false)
+			if (cub->player.flag == false)
 				error("There should be a player in map");
 			cub->height = count_nodes(&cub->map);
 		}

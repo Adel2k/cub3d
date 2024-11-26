@@ -2,9 +2,9 @@ NAME = cub3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Imlx -Iinclude -g3 -fsanitize=address
-MLXFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit	
-# MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
+CFLAGS = -Wall -Wextra -Werror -Imlx -Iinclude -g3 -fsanitize=address -g
+# MLXFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit	
+MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
 
 HEADERS =	include/cub3d.h \
 			include/get_next_line.h

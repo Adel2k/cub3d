@@ -31,8 +31,7 @@ void	init_cub(t_cub3d *cub)
 	// cub->map->line[99] = 0;
 	cub->map->next = NULL;
 	cub->map->prev = NULL;
-	cub->player = malloc(sizeof(t_player));
-	cub->player->flag = false;
+	cub->player.flag = false;
 	cub->first_last_line = false;
 	cub->texture = malloc(sizeof(t_texture));
 	if (!cub->texture)
