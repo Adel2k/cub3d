@@ -20,31 +20,31 @@ t_map	*lstlast(t_map *node)
 		node = node->next;
 	return (node);
 }
-void add_node(char *line, t_map **map, int index)
+
+void add_node(char *line, t_map **stack, int index)
 {
-    t_map *new_node;
-    t_map *last;
+	t_map	*new_node;
+	t_map	*last;
 
-    if (!line || !map || !*map) // Validate input
-        exit(1);
-
-    new_node = ft_lstnew(ft_strlen(line), line, index); // Create a new node
-    if (!new_node)
-    {
-        free_and_error(NULL, 1, "Malloc error");
+	  if (!line || !stack || !*stack) // Validate input
         return;
-    }
 
-    // Append to the end of the map
-    last = *map;
-    while (last && last->next)
-        last = last->next;
+	new_node = ft_lstnew(ft_strlen(line), line, index); // Create a new node
+	if (!new_node)
+	{
+		free_and_error(NULL, 1, "Malloc error");
+		return;
+	}
 
-    last->next = new_node; // Add the new node
-    new_node->prev = last; // Update the previous pointer
-	printf("Added node: %s at index %d\n", (*map)->line, (*map)->index);
+	// Always append the new node to the stack
+	last = *stack;
+	while (last && last->next) // Traverse to the end of the stack
+		last = last->next;
+
+	last->next = new_node; // Add the new node at the end
+	new_node->prev = last; // Set the new node's previous pointer
+	printf("----> %p\n", (*stack)->line);
 }
-
 
 int	count_nodes(t_map **map)
 {
@@ -77,11 +77,11 @@ t_map	*ft_lstnew(int len, char *line, int index)
 
 	// Duplicate the line to ensure the node owns its data
 	res->line = ft_strdup(line);
-	// if (!res->line)
-	// {
-	// 	free(res);
-	// 	return NULL;
-	// }
+	if (!res->line)
+	{
+		free(res);
+		return NULL;
+	}
 
 	return (res);
 }
