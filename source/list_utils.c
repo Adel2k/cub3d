@@ -77,11 +77,11 @@ t_map	*ft_lstnew(int len, char *line, int index)
 
 	// Duplicate the line to ensure the node owns its data
 	res->line = ft_strdup(line);
-	if (!res->line)
-	{
-		free(res);
-		return NULL;
-	}
+	// if (!res->line)
+	// {
+	// 	free(res);
+	// 	return NULL;
+	// }
 
 	return (res);
 }
